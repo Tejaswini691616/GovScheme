@@ -1,0 +1,26 @@
+SAFE MERGE
+
+Original GovScheme main files were not overwritten or modified.
+Unique files from GovScheme (3) were added.
+.env from GovScheme (3) was intentionally excluded for security.
+venv/.git/__pycache__ files were excluded.
+
+Conflicting files (present in both archives) were NOT overwritten:
+GovScheme/.gitignore
+GovScheme/README.md
+GovScheme/app.py
+GovScheme/automation/scheduler.py
+GovScheme/config.py
+GovScheme/database/schema.sql
+GovScheme/requirements.txt
+GovScheme/static/css/base/reset.css
+GovScheme/static/css/base/typography.css
+GovScheme/static/css/base/variables.css
+GovScheme/static/css/dashboard/dashboard.css
+GovScheme/static/js/chatbot.js
+GovScheme/templates/admin/admin_dashboard.html
+GovScheme/templates/chatbot/chatbot.html
+GovScheme/templates/dashboard/dashboard.html
+GovScheme/templates/layouts/dashboard_base.html
+GovScheme/tests/test_auth.py
+GovScheme/tests/test_chatbot.py

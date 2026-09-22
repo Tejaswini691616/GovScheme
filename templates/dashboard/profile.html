@@ -1,0 +1,167 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}My Profile | SmartGov AI{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-layout">
+
+    {% include "includes/dashboard_sidebar.html" %}
+
+    <main class="dashboard-content">
+
+        <section class="profile-header">
+
+            <h2>My Profile</h2>
+
+            <p>
+                Manage your personal information used for government scheme recommendations.
+            </p>
+
+        </section>
+
+        <div class="profile-card">
+
+            <div class="profile-top">
+
+                <div class="profile-avatar">
+
+                    <i class="bi bi-person-circle"></i>
+
+                </div>
+
+                <div>
+
+                    <h3>Vaibhavi S</h3>
+
+                </div>
+
+                <button class="edit-btn">
+
+                    <i class="bi bi-pencil-square"></i>
+
+                    Edit Profile
+
+                </button>
+
+            </div>
+
+            <hr>
+
+            <div class="profile-grid">
+
+                <div class="profile-item">
+
+                    <label>Email</label>
+
+                    <span>vaibhavi@example.com</span>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <label>Mobile</label>
+
+                    <span>+91 9876543210</span>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <label>Date of Birth</label>
+
+                    <span>12 April 2005</span>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <label>Gender</label>
+
+                    <span>Female</span>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <label>State</label>
+
+                    <span>Karnataka</span>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <label>District</label>
+
+                    <span>Bengaluru</span>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <label>Occupation</label>
+
+                    <span>Student</span>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <label>Annual Income</label>
+
+                    <span>₹2,00,000</span>
+
+                </div>
+
+                <div class="profile-item">
+
+                    <label>Category</label>
+
+                    <span>General</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <section class="summary-cards">
+
+            <div class="summary-card">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                <h3>18</h3>
+
+                <p>Eligible Schemes</p>
+
+            </div>
+
+            <div class="summary-card">
+
+                <i class="bi bi-heart-fill"></i>
+
+                <h3>6</h3>
+
+                <p>Saved Schemes</p>
+
+            </div>
+
+            <div class="summary-card">
+
+                <i class="bi bi-file-earmark-text-fill"></i>
+
+                <h3>8</h3>
+
+                <p>Applications</p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

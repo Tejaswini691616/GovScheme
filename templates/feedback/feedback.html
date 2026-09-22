@@ -1,0 +1,90 @@
+{# PATH: GovScheme/templates/feedback/feedback.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Feedback - Yojana Bharath{% endblock %}
+{% block content %}
+<div class="card border-0 shadow-sm p-4" style="border-radius: var(--sg-radius); max-width:600px;">
+  <h5 class="mb-1"><i class="bi bi-star"></i> Tell us about your experience</h5>
+  <p class="text-muted-sg small mb-4">Your feedback helps us improve Yojana Bharath for every citizen.</p>
+
+  <form method="post" id="feedbackForm">
+    <input type="hidden" name="voice_transcribed" id="voiceTranscribedFlag" value="0">
+    <div class="mb-4 text-center">
+      <div id="starRating" style="font-size:2.2rem; cursor:pointer;">
+        {% for i in range(1,6) %}
+          <i class="bi bi-star" data-value="{{ i }}" style="color:#D4A017; margin: 0 4px;"></i>
+        {% endfor %}
+      </div>
+      <input type="hidden" name="rating" id="ratingInput" value="0">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Which feature is this about? (optional)</label>
+      <select name="feature" class="form-select">
+        <option value="">General</option>
+        {% for f in features %}<option value="{{ f }}">{{ f }}</option>{% endfor %}
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <label class="form-label mb-0">Comments</label>
+        <button type="button" id="voiceFeedbackBtn" class="btn btn-sm btn-outline-secondary">
+          <i class="bi bi-mic"></i> Speak your feedback
+        </button>
+      </div>
+      <textarea name="comment" id="commentBox" class="form-control mt-2" rows="4" placeholder="Tell us what worked well or what didn't..."></textarea>
+      <div class="small text-muted-sg mt-1" id="voiceStatus"></div>
+    </div>
+
+    <button type="submit" class="btn btn-sg-primary w-100">Submit Feedback</button>
+  </form>
+</div>
+
+<script>
+(function() {
+  const stars = document.querySelectorAll('#starRating i');
+  const ratingInput = document.getElementById('ratingInput');
+  stars.forEach(star => {
+    star.addEventListener('click', () => {
+      const val = parseInt(star.dataset.value);
+      ratingInput.value = val;
+      stars.forEach(s => {
+        s.className = parseInt(s.dataset.value) <= val ? 'bi bi-star-fill' : 'bi bi-star';
+      });
+    });
+  });
+
+  // Voice feedback: STT -> text -> user can edit -> submit (spec section:
+  // Feedback / "Speak your feedback"). Uses the same browser_web_speech
+  // provider as the main chatbot - no server round trip, no API key.
+  const voiceBtn = document.getElementById('voiceFeedbackBtn');
+  const commentBox = document.getElementById('commentBox');
+  const voiceStatus = document.getElementById('voiceStatus');
+  const voiceFlag = document.getElementById('voiceTranscribedFlag');
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SR) {
+    voiceBtn.disabled = true;
+    voiceBtn.title = "Voice input isn't supported in this browser. Please type your feedback.";
+  } else {
+    let recognizing = false;
+    voiceBtn.addEventListener('click', () => {
+      if (recognizing) return;
+      const recognition = new SR();
+      const localeMap = {English:'en-IN',Hindi:'hi-IN',Bengali:'bn-IN',Tamil:'ta-IN',Telugu:'te-IN',Marathi:'mr-IN',Gujarati:'gu-IN',Kannada:'kn-IN',Malayalam:'ml-IN',Punjabi:'pa-IN',Odia:'or-IN',Assamese:'as-IN'};
+      recognition.lang = localeMap[document.body.dataset.language || 'English'] || 'en-IN';
+      recognition.onstart = () => { recognizing = true; voiceStatus.textContent = 'Listening... speak now.'; };
+      recognition.onresult = (e) => {
+        const transcript = e.results[0][0].transcript;
+        commentBox.value = (commentBox.value ? commentBox.value + ' ' : '') + transcript;
+        voiceFlag.value = '1';
+        voiceStatus.textContent = 'Transcribed - feel free to edit before submitting.';
+      };
+      recognition.onerror = () => { voiceStatus.textContent = "Sorry, I couldn't understand that. Please type instead."; };
+      recognition.onend = () => { recognizing = false; };
+      recognition.start();
+    });
+  }
+})();
+</script>
+{% endblock %}

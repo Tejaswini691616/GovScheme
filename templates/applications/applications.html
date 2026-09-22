@@ -1,0 +1,35 @@
+{# PATH: GovScheme/templates/applications/applications.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Applications - Yojana Bharath{% endblock %}
+{% block content %}
+<h4 class="mb-3">My Applications</h4>
+
+<div class="table-responsive">
+<table class="table table-bordered bg-white align-middle">
+  <thead class="table-light">
+    <tr><th>Scheme</th><th>Applied On</th><th>Application No.</th><th>Status</th><th>Remarks</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for a in applications %}
+    <tr>
+      <td>{{ a.scheme_name }}</td>
+      <td>{{ a.application_date }}</td>
+      <td>{{ a.application_number or '—' }}</td>
+      <td>
+        <span class="badge
+          {% if a.status in ['Completed','Approved','Submitted'] %}bg-success
+          {% elif a.status in ['Failed','Rejected','Needs Manual Action'] %}bg-danger
+          {% else %}bg-secondary{% endif %}">
+          {{ a.status }}
+        </span>
+      </td>
+      <td class="small text-muted-sg">{{ a.remarks or '—' }}</td>
+      <td><a href="{{ url_for('application.application_details', application_id=a.application_id) }}" class="btn btn-sm btn-sg-outline">View</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="text-center text-muted-sg">No applications yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

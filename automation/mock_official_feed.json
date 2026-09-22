@@ -1,0 +1,22 @@
+[
+  {
+    "scheme_id": "DEMO-001",
+    "scheme_name": "[DEMO] Sample New Scheme (not real)",
+    "category": "Skills & Employment",
+    "eligibility": "This is fictional sample data used only to demonstrate the NEW scheme detection pipeline while Demo Mode is enabled.",
+    "min_age": 18,
+    "max_age": 45,
+    "income_limit": 400000,
+    "caste_requirement": null
+  },
+  {
+    "scheme_id": "DEMO-002",
+    "scheme_name": "[DEMO] Sample Updated Scheme (not real)",
+    "category": "Health & Wellness",
+    "eligibility": "This is fictional sample data used only to demonstrate the UPDATED scheme detection pipeline while Demo Mode is enabled.",
+    "min_age": null,
+    "max_age": null,
+    "income_limit": 300000,
+    "caste_requirement": null
+  }
+]

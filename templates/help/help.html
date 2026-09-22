@@ -1,0 +1,31 @@
+{# PATH: GovScheme/templates/help/help.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Help & Support - SmartGov AI{% endblock %}
+{% block content %}
+<div class="sg-section-title"><span class="bar"></span><h4 class="mb-0">Help &amp; Support</h4></div>
+
+<div class="row g-3">
+  {% for title, icon, text in [
+    ('How SmartGov AI works', 'bi-diagram-3', 'Your profile is checked against each scheme\'s configured rules by a deterministic eligibility engine. Schemes you are potentially eligible for are then ranked by a machine-learning relevance score. Nothing here is an official government decision.'),
+    ('Schemes', 'bi-journal-text', 'Browse or search 20 configured central schemes by name, category or keyword. Each scheme shows its official government source link where verified.'),
+    ('Eligibility', 'bi-check2-circle', '"Potentially Eligible" means you matched the configured prototype criteria - always confirm on the official government website before applying.'),
+    ('Recommendations', 'bi-stars', 'The Model Relevance Score reflects how a trained ML model ranks schemes you are already potentially eligible for. It is not a probability of approval.'),
+    ('Applications', 'bi-send', 'Apply Now gives you two paths: a SmartGov AI demo application (simulated, reference numbers start with DEMO-) or the real official government portal.'),
+    ('Chatbot & Voice Assistant', 'bi-robot', 'Ask about eligibility, recommendations, scheme details or say things like "open my profile" to navigate by voice or text, in any of 12 languages.'),
+    ('Languages', 'bi-translate', 'Switch the chatbot language from the language selector in the chat panel. Voice input/output works for 10 of the 12 languages via your browser.'),
+    ('Complaints', 'bi-headset', 'Raise a complaint any time from the Complaints page, or ask the chatbot - it will try to help first and offer to escalate if it can\'t resolve the issue.'),
+    ('Feedback', 'bi-star', 'Rate your experience and tell us what to improve - by typing or speaking your feedback.'),
+  ] %}
+  <div class="col-md-6">
+    <div class="sg-scheme-card h-100">
+      <h6><i class="bi {{ icon }} text-success me-1"></i> {{ title }}</h6>
+      <p class="small text-muted-sg mb-0">{{ text }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="alert alert-light border small mt-3">
+  Still need help? <a href="{{ url_for('complaint.new_complaint') }}">Raise a complaint</a> and our team (or the AI assistant first) will get back to you.
+</div>
+{% endblock %}

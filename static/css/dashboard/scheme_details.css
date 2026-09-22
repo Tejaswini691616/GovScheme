@@ -1,0 +1,308 @@
+/* ===========================
+      SCHEME DETAILS PAGE
+=========================== */
+
+.back-btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    text-decoration:none;
+
+    color:#2E7D32;
+
+    font-weight:600;
+
+    margin-bottom:25px;
+}
+
+.back-btn:hover{
+
+    color:#1B5E20;
+}
+
+.scheme-hero-card{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:35px;
+
+    display:flex;
+
+    gap:30px;
+
+    align-items:center;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
+
+    margin-bottom:30px;
+}
+
+.scheme-logo img{
+
+    width:130px;
+
+    height:130px;
+
+    object-fit:contain;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    border:1px solid #ECECEC;
+
+    padding:12px;
+}
+
+.scheme-main-info{
+
+    flex:1;
+}
+
+.scheme-category{
+
+    display:inline-block;
+
+    background:#E8F5E9;
+
+    color:#2E7D32;
+
+    padding:7px 18px;
+
+    border-radius:30px;
+
+    font-weight:600;
+
+    margin-bottom:15px;
+}
+
+.scheme-main-info h2{
+
+    font-size:34px;
+
+    font-weight:700;
+
+    margin-bottom:15px;
+
+    color:#222;
+}
+
+.scheme-main-info p{
+
+    color:#666;
+
+    font-size:16px;
+
+    margin-bottom:25px;
+}
+
+.scheme-actions{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+}
+
+/* Detail Cards */
+
+.detail-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    margin-bottom:25px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.05);
+}
+
+.detail-card h4{
+
+    color:#2E7D32;
+
+    margin-bottom:18px;
+
+    font-weight:700;
+}
+
+.detail-card ul{
+
+    margin:0;
+
+    padding-left:20px;
+}
+
+.detail-card li{
+
+    margin-bottom:12px;
+
+    color:#555;
+}
+
+/* Responsive */
+
+@media(max-width:992px){
+
+    .scheme-hero-card{
+
+        flex-direction:column;
+
+        text-align:center;
+    }
+
+    .scheme-actions{
+
+        justify-content:center;
+    }
+
+}
+
+/* ===========================
+      FAQ
+=========================== */
+
+.accordion-item{
+
+    border:none;
+
+    margin-bottom:12px;
+
+    border-radius:12px;
+
+    overflow:hidden;
+}
+
+.accordion-button{
+
+    font-weight:600;
+}
+
+.accordion-button:not(.collapsed){
+
+    background:#E8F5E9;
+
+    color:#2E7D32;
+}
+
+.accordion-button:focus{
+
+    box-shadow:none;
+}
+/* ===========================
+      RELATED SCHEMES
+=========================== */
+
+.related-schemes{
+
+    margin-top:40px;
+}
+
+.related-schemes h3{
+
+    color:#2E7D32;
+
+    font-weight:700;
+
+    margin-bottom:25px;
+}
+
+.related-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:25px;
+}
+
+.related-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    text-align:center;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.05);
+
+    transition:.3s;
+}
+
+.related-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.related-card img{
+
+    width:70px;
+
+    height:70px;
+
+    object-fit:contain;
+
+    margin-bottom:15px;
+}
+
+.related-card h5{
+
+    font-weight:700;
+
+    margin-bottom:10px;
+}
+
+.related-card p{
+
+    color:#666;
+
+    font-size:14px;
+
+    margin-bottom:20px;
+}
+
+.small-btn{
+
+    background:#2E7D32;
+
+    color:#fff;
+
+    padding:8px 18px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    transition:.3s;
+}
+
+.small-btn:hover{
+
+    background:#256428;
+
+    color:#fff;
+}
+
+@media(max-width:992px){
+
+    .related-grid{
+
+        grid-template-columns:1fr;
+    }
+
+}

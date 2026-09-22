@@ -1,0 +1,63 @@
+{
+  "results": {
+    "LogisticRegression": {
+      "accuracy": 0.8993,
+      "precision": 0.8959985248017702,
+      "recall": 0.7701695989855761,
+      "f1_score": 0.8283327650869416,
+      "confusion_matrix": [
+        [
+          13127,
+          564
+        ],
+        [
+          1450,
+          4859
+        ]
+      ],
+      "precision_at_5": 0.8886000000000002,
+      "recall_at_5": 0.7458295454545455
+    },
+    "DecisionTree": {
+      "accuracy": 0.9818,
+      "precision": 0.9463883465985884,
+      "recall": 0.9988904739261373,
+      "f1_score": 0.971930906847625,
+      "confusion_matrix": [
+        [
+          13334,
+          357
+        ],
+        [
+          7,
+          6302
+        ]
+      ],
+      "precision_at_5": 0.9392,
+      "recall_at_5": 0.7854732323232323
+    },
+    "RandomForest": {
+      "accuracy": 0.97725,
+      "precision": 0.9373879258816498,
+      "recall": 0.9942938659058488,
+      "f1_score": 0.9650026921006076,
+      "confusion_matrix": [
+        [
+          13272,
+          419
+        ],
+        [
+          36,
+          6273
+        ]
+      ],
+      "precision_at_5": 0.9562,
+      "recall_at_5": 0.8021732323232323
+    }
+  },
+  "best_model": "DecisionTree",
+  "train_citizens": 4000,
+  "test_citizens": 1000,
+  "train_records": 80000,
+  "test_records": 20000
+}

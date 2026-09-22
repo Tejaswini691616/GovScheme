@@ -1,0 +1,226 @@
+/* ===============================
+        Notifications Page
+================================ */
+
+.notifications-header{
+
+    margin-bottom:35px;
+}
+
+.notifications-header h2{
+
+    font-size:34px;
+
+    font-weight:700;
+
+    color:#2E7D32;
+
+    margin-bottom:8px;
+}
+
+.notifications-header p{
+
+    color:#666;
+
+    font-size:16px;
+}
+
+/* =============================== */
+
+.notification-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:25px;
+}
+
+/* =============================== */
+
+.notification-card{
+
+    display:grid;
+
+    grid-template-columns:80px 1fr 170px;
+
+    align-items:center;
+
+    gap:25px;
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    border-left:6px solid #2E7D32;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
+
+    transition:.3s;
+}
+
+.notification-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 12px 28px rgba(0,0,0,.12);
+}
+
+/* Left Border Colors */
+
+.notification-card.primary{
+
+    border-left-color:#1976D2;
+}
+
+.notification-card.success{
+
+    border-left-color:#2E7D32;
+}
+
+.notification-card.warning{
+
+    border-left-color:#F9A825;
+}
+
+/* =============================== */
+
+.notification-icon{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:28px;
+
+    background:#EEF7FF;
+
+    color:#1976D2;
+}
+
+.success .notification-icon{
+
+    background:#E8F5E9;
+
+    color:#2E7D32;
+}
+
+.warning .notification-icon{
+
+    background:#FFF8E1;
+
+    color:#F9A825;
+}
+
+/* =============================== */
+
+.notification-top{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:10px;
+}
+
+.notification-top h4{
+
+    margin:0;
+
+    font-size:22px;
+
+    font-weight:700;
+}
+
+.notification-top span{
+
+    color:#888;
+
+    font-size:14px;
+
+    font-weight:500;
+}
+
+.notification-center p{
+
+    margin:0;
+
+    color:#666;
+
+    line-height:1.7;
+}
+
+/* =============================== */
+
+.notification-right{
+
+    display:flex;
+
+    justify-content:flex-end;
+}
+
+.notification-btn{
+
+    background:#2E7D32;
+
+    color:#fff;
+
+    text-decoration:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.notification-btn:hover{
+
+    background:#1B5E20;
+
+    color:#fff;
+}
+
+/* =============================== */
+
+@media(max-width:900px){
+
+    .notification-card{
+
+        grid-template-columns:1fr;
+
+        text-align:center;
+    }
+
+    .notification-top{
+
+        flex-direction:column;
+
+        gap:8px;
+    }
+
+    .notification-right{
+
+        justify-content:center;
+    }
+
+    .notification-icon{
+
+        margin:auto;
+    }
+
+}

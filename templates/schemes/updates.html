@@ -1,0 +1,25 @@
+{# PATH: GovScheme/templates/schemes/updates.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}New & Updated Schemes - SmartGov AI{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div><h4 class="mb-1">New &amp; Updated Schemes</h4><p class="text-muted-sg mb-0">Recent changes recorded from configured scheme sources.</p></div>
+  <a class="btn btn-sm btn-sg-outline" href="{{ url_for('scheme.schemes_list') }}">Browse Schemes</a>
+</div>
+<div class="card border-0 shadow-sm">
+  <div class="list-group list-group-flush">
+  {% for u in updates %}
+    <div class="list-group-item py-3">
+      <div class="d-flex justify-content-between gap-3">
+        <div><strong>{{ u.scheme_name or u.scheme_id }}</strong><div class="small text-muted-sg">{{ u.checked_at }} · {{ u.source }}</div></div>
+        <span class="badge {{ 'bg-success' if u.change_type == 'NEW' else 'bg-warning text-dark' if u.change_type == 'UPDATED' else 'bg-secondary' }}">{{ u.change_type }}</span>
+      </div>
+      {% if u.new_value %}<div class="small mt-2">{{ u.new_value }}</div>{% endif %}
+      {% if u.scheme_id %}<a class="small" href="{{ url_for('scheme.scheme_details', scheme_id=u.scheme_id) }}">View scheme</a>{% endif %}
+    </div>
+  {% else %}
+    <div class="list-group-item py-4 text-center text-muted-sg">No new or updated scheme records are available yet.</div>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

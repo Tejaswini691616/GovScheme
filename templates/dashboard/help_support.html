@@ -1,0 +1,108 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}Help & Support | SmartGov AI{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-layout">
+
+    {% include "includes/dashboard_sidebar.html" %}
+
+    <main class="dashboard-content">
+
+        <section class="help-header">
+
+            <h2>Help & Support</h2>
+
+            <p>
+                Find answers, get assistance, and learn how SmartGov AI works.
+            </p>
+
+        </section>
+
+        <section class="help-grid">
+
+            <div class="help-card">
+
+                <i class="bi bi-question-circle"></i>
+
+                <h4>Frequently Asked Questions</h4>
+
+                <p>
+                    Find answers to common questions about government schemes,
+                    eligibility, applications, and SmartGov AI.
+                </p>
+
+                <a href="#" class="help-link">
+                    View FAQs
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+            <div class="help-card">
+
+                <i class="bi bi-headset"></i>
+
+                <h4>Contact Support</h4>
+
+                <p>
+                    Need help? Contact our support team for assistance with
+                    your account or applications.
+                </p>
+
+                <a href="#" class="help-link">
+                    Contact Us
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+            <div class="help-card">
+
+                <i class="bi bi-book"></i>
+
+                <h4>How SmartGov AI Works</h4>
+
+                <p>
+                    Learn how our AI-powered eligibility system and RPA
+                    automation help simplify government services.
+                </p>
+
+                <a href="#" class="help-link">
+                    Learn More
+                    <i class="bi bi-arrow-right"></i>
+                </a>
+
+            </div>
+
+        </section>
+
+        <section class="support-card">
+
+            <div class="support-icon">
+                <i class="bi bi-chat-dots"></i>
+            </div>
+
+            <div>
+
+                <h4>Still Need Help?</h4>
+
+                <p>
+                    Our SmartGov AI assistant can help you understand
+                    government schemes and eligibility requirements.
+                </p>
+
+            </div>
+
+            <a href="#" class="support-btn">
+                Open Assistant
+            </a>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

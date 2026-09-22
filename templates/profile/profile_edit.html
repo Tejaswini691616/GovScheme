@@ -1,0 +1,47 @@
+{# PATH: GovScheme/templates/profile/profile_edit.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Edit Profile - Yojana Bharath{% endblock %}
+{% block content %}
+<h4 class="mb-3">Edit Profile</h4>
+
+<div class="card border-0 shadow-sm p-4" style="border-radius: var(--sg-radius);">
+<form method="post">
+  <div class="sg-section-title"><span class="bar"></span><h6 class="mb-0 text-uppercase text-muted-sg">Personal Information</h6></div>
+  <div class="row g-3">
+    <div class="col-md-6"><label class="form-label">Full Name</label><input type="text" name="full_name" class="form-control" value="{{ user.full_name or '' }}" required></div>
+    <div class="col-md-3"><label class="form-label">Date of Birth</label><input type="date" name="dob" class="form-control" value="{{ user.dob or '' }}"></div>
+    <div class="col-md-3"><label class="form-label">Age</label><input type="number" name="age" class="form-control" value="{{ user.age or '' }}" min="0" max="120"></div>
+    <div class="col-md-4"><label class="form-label">Gender</label><select name="gender" class="form-select">{% for g in ['Male','Female','Other'] %}<option value="{{g}}" {{ 'selected' if user.gender == g }}>{{g}}</option>{% endfor %}</select></div>
+    <div class="col-md-4"><label class="form-label">Marital Status</label><select name="marital_status" class="form-select">{% for x in ['Single','Married','Widowed','Divorced'] %}<option value="{{x}}" {{ 'selected' if user.marital_status == x }}>{{x}}</option>{% endfor %}</select></div>
+    <div class="col-md-4"><label class="form-label">Phone</label><input type="tel" name="phone" class="form-control" value="{{ user.phone or '' }}"></div>
+  </div>
+  <div class="sg-section-title mt-4"><span class="bar"></span><h6 class="mb-0 text-uppercase text-muted-sg">Citizen Information</h6></div>
+  <div class="row g-3">
+    <div class="col-md-4"><label class="form-label">State</label><input name="state" class="form-control" value="{{ user.state or '' }}"></div>
+    <div class="col-md-4"><label class="form-label">District</label><input name="district" class="form-control" value="{{ user.district or '' }}"></div>
+    <div class="col-md-4"><label class="form-label">PIN Code</label><input name="pin_code" class="form-control" value="{{ user.pin_code or '' }}"></div>
+    <div class="col-md-4"><label class="form-label">Rural / Urban</label><select name="rural_urban" class="form-select"><option value="Rural" {{ 'selected' if user.rural_urban == 'Rural' }}>Rural</option><option value="Urban" {{ 'selected' if user.rural_urban == 'Urban' }}>Urban</option></select></div>
+    <div class="col-md-4"><label class="form-label">Family Size</label><input type="number" name="family_size" class="form-control" min="1" value="{{ user.family_size or '' }}"></div>
+    <div class="col-md-4"><label class="form-label">Dependents</label><input type="number" name="dependents" class="form-control" min="0" value="{{ user.dependents or '' }}"></div>
+    <div class="col-md-6"><label class="form-label">Education</label><select name="education" class="form-select">{% for e in ['Below 10th','10th Pass','12th Pass','Diploma','Graduate','Post Graduate'] %}<option value="{{e}}" {{ 'selected' if user.education == e }}>{{e}}</option>{% endfor %}</select></div>
+    <div class="col-md-6"><label class="form-label">Occupation</label><input name="occupation" class="form-control" value="{{ user.occupation or '' }}"></div>
+    <div class="col-md-4"><label class="form-label">Employment Status</label><input name="employment_status" class="form-control" value="{{ user.employment_status or '' }}"></div>
+    <div class="col-md-4"><label class="form-label">Annual Family Income (₹)</label><input type="number" name="annual_income" class="form-control" min="0" value="{{ user.annual_income or '' }}"></div>
+    <div class="col-md-4"><label class="form-label">Caste Category</label><select name="caste" class="form-select">{% for c in ['General','OBC','SC','ST'] %}<option value="{{c}}" {{ 'selected' if user.caste == c }}>{{c}}</option>{% endfor %}</select></div>
+    <div class="col-md-6"><label class="form-label">Land Holding (acres)</label><input type="number" step="0.1" name="land_holding_acres" class="form-control" min="0" value="{{ user.land_holding_acres or 0 }}"></div>
+    <div class="col-md-6"><label class="form-label">Minority</label><select name="minority" class="form-select"><option value="No" {{ 'selected' if user.minority == 'No' }}>No</option><option value="Yes" {{ 'selected' if user.minority == 'Yes' }}>Yes</option></select></div>
+  </div>
+  <div class="sg-section-title mt-4"><span class="bar"></span><h6 class="mb-0 text-uppercase text-muted-sg">Eligibility & Documents</h6></div>
+  <div class="row g-3">
+    {% for field, label in [('farmer','Farmer'),('student','Student'),('bpl','BPL Card Holder'),('disabled','Person with Disability'),('senior_citizen','Senior Citizen'),('widow','Widow')] %}<div class="col-md-4"><label class="form-label">{{label}}</label><select name="{{field}}" class="form-select"><option value="No" {{ 'selected' if user[field] == 'No' }}>No</option><option value="Yes" {{ 'selected' if user[field] == 'Yes' }}>Yes</option></select></div>{% endfor %}
+    <div class="col-md-4"><label class="form-label">Disability %</label><input type="number" step="0.1" min="0" max="100" name="disability_percentage" class="form-control" value="{{ user.disability_percentage or 0 }}"></div>
+    <div class="col-md-4"><label class="form-label">Health Insurance</label><input name="health_insurance" class="form-control" value="{{ user.health_insurance or '' }}"></div>
+    <div class="col-md-4"><label class="form-label">Aadhaar status</label><input name="aadhaar" class="form-control" value="{{ user.aadhaar or '' }}" placeholder="Status/last 4 digits only"></div>
+    <div class="col-md-4"><label class="form-label">Bank Account</label><input name="bank_account" class="form-control" value="{{ user.bank_account or '' }}"></div>
+    <div class="col-md-4"><label class="form-label">Ration Card</label><input name="ration_card" class="form-control" value="{{ user.ration_card or '' }}"></div>
+    <div class="col-12"><label class="form-label">Existing Benefits</label><textarea name="existing_benefits" class="form-control" rows="2">{{ user.existing_benefits or '' }}</textarea></div>
+  </div>
+  <div class="d-flex gap-2 mt-4"><button type="submit" class="btn btn-sg-primary"><i class="bi bi-check2"></i> Save Changes</button><a href="{{ url_for('profile.profile_view') }}" class="btn btn-outline-secondary">Cancel</a></div>
+</form>
+</div>
+{% endblock %}

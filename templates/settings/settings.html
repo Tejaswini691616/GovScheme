@@ -1,0 +1,44 @@
+{# PATH: GovScheme/templates/settings/settings.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Settings - Yojana Bharath{% endblock %}
+{% block content %}
+<div class="sg-section-title"><span class="bar"></span><h4 class="mb-0">Settings</h4></div>
+
+<div class="card border-0 shadow-sm p-4" style="border-radius: var(--sg-radius); max-width:560px;">
+  <form method="post">
+    <h6 class="mb-3"><i class="bi bi-palette"></i> Theme</h6>
+    <div class="mb-4">
+      {% for t in themes %}
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="theme_preference" id="theme-{{ t }}" value="{{ t }}" {{ 'checked' if user.theme_preference == t }}>
+        <label class="form-check-label" for="theme-{{ t }}">{{ t.replace('-', ' ')|title }}</label>
+      </div>
+      {% endfor %}
+      <div class="small text-muted-sg mt-1">"System" follows your device's light/dark setting. "High Contrast" uses maximum-contrast colors for low-vision accessibility.</div>
+    </div>
+
+    <h6 class="mb-3"><i class="bi bi-fonts"></i> Accessibility</h6>
+    <div class="mb-3">
+      <label class="form-label">Text Size</label>
+      <select name="text_size" class="form-select" style="max-width:220px;">
+        {% for s in text_sizes %}<option value="{{ s }}" {{ 'selected' if user.text_size == s }}>{{ s|title }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="form-check form-switch mb-4">
+      <input class="form-check-input" type="checkbox" role="switch" id="reducedMotion" name="reduced_motion" {{ 'checked' if user.reduced_motion }}>
+      <label class="form-check-label" for="reducedMotion">Reduce motion &amp; animations</label>
+    </div>
+
+    <h6 class="mb-3"><i class="bi bi-translate"></i> Default Chatbot Language</h6>
+    <div class="mb-4">
+      <select name="preferred_language" class="form-select" style="max-width:260px;">
+        {% for lang in languages %}
+        <option value="{{ lang }}" {{ 'selected' if user.preferred_language == lang }}>{{ lang }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-sg-primary">Save Settings</button>
+  </form>
+</div>
+{% endblock %}

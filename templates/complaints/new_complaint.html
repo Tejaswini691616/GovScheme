@@ -1,0 +1,57 @@
+{# PATH: GovScheme/templates/complaints/new_complaint.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Raise a Complaint - Yojana Bharath{% endblock %}
+{% block content %}
+<a href="{{ url_for('complaint.complaints_list') }}" class="text-muted-sg small text-decoration-none"><i class="bi bi-arrow-left"></i> Back to Complaints</a>
+
+<div class="card border-0 shadow-sm mt-3 p-4" style="border-radius: var(--sg-radius); max-width:640px;">
+  <h5 class="mb-3"><i class="bi bi-headset"></i> Raise a Complaint</h5>
+  <form method="post">
+    <div class="mb-3">
+      <label class="form-label">Category</label>
+      <select name="category" class="form-select">
+        {% for c in categories %}<option value="{{ c }}">{{ c }}</option>{% endfor %}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Language</label>
+      <select name="language" id="complaintLanguage" class="form-select">
+        {% for lang, code in [('English','en-IN'),('Hindi','hi-IN'),('Bengali','bn-IN'),('Tamil','ta-IN'),
+                                ('Telugu','te-IN'),('Marathi','mr-IN'),('Gujarati','gu-IN'),('Kannada','kn-IN'),
+                                ('Malayalam','ml-IN'),('Punjabi','pa-IN'),('Odia',''),('Assamese','')] %}
+        <option value="{{ lang }}" data-locale="{{ code }}">{{ lang }}</option>
+        {% endfor %}
+      </select>
+      <div class="small text-muted-sg mt-1">Voice input works for 10 of these languages via your browser (Odia and Assamese are text-only for now).</div>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Subject</label>
+      <input type="text" name="subject" class="form-control" placeholder="Short summary" required>
+    </div>
+    <div class="mb-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <label class="form-label mb-0">Description</label>
+        <button type="button" id="complaintVoiceBtn" class="btn btn-sm btn-outline-secondary">
+          <i class="bi bi-mic"></i> Speak your complaint
+        </button>
+      </div>
+      <textarea name="description" id="description" class="form-control mt-2" rows="5" placeholder="Describe the issue in detail..." required></textarea>
+      <div class="small text-muted-sg mt-1" id="complaintVoiceStatus"></div>
+    </div>
+    <button type="submit" class="btn btn-sg-primary"><i class="bi bi-send"></i> Submit Complaint</button>
+  </form>
+</div>
+
+<script src="{{ url_for('static', filename='js/voice_input.js') }}"></script>
+<script>
+  attachVoiceToField({
+    buttonId: 'complaintVoiceBtn',
+    fieldId: 'description',
+    statusId: 'complaintVoiceStatus',
+    getLocaleCode: () => {
+      const sel = document.getElementById('complaintLanguage');
+      return sel.options[sel.selectedIndex].dataset.locale || null;
+    }
+  });
+</script>
+{% endblock %}

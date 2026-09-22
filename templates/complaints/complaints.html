@@ -1,0 +1,39 @@
+{# PATH: GovScheme/templates/complaints/complaints.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Complaints - Yojana Bharath{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div class="sg-section-title mb-0"><span class="bar"></span><h4 class="mb-0">My Complaints</h4></div>
+  <a href="{{ url_for('complaint.new_complaint') }}" class="btn btn-sg-primary btn-sm"><i class="bi bi-plus-lg"></i> Raise a Complaint</a>
+</div>
+
+<div class="table-responsive">
+<table class="table table-bordered bg-white align-middle">
+  <thead class="table-light">
+    <tr><th>ID</th><th>Category</th><th>Subject</th><th>Status</th><th>Raised On</th><th></th></tr>
+  </thead>
+  <tbody>
+    {% for c in complaints %}
+    <tr>
+      <td><code>{{ c.complaint_number }}</code></td>
+      <td>{{ c.category }}</td>
+      <td>{{ c.subject }}</td>
+      <td>
+        <span class="badge
+          {% if c.status in ['RESOLVED'] %}bg-success
+          {% elif c.status in ['CLOSED'] %}bg-secondary
+          {% elif c.status in ['ESCALATED'] %}bg-danger
+          {% else %}bg-warning text-dark{% endif %}">
+          {{ c.status.replace('_',' ') }}
+        </span>
+      </td>
+      <td class="small text-muted-sg">{{ c.created_at }}</td>
+      <td><a href="{{ url_for('complaint.complaint_details', complaint_id=c.complaint_id) }}" class="btn btn-sm btn-sg-outline">View</a></td>
+    </tr>
+    {% else %}
+    <tr><td colspan="6" class="text-center text-muted-sg">No complaints raised yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

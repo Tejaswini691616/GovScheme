@@ -1,0 +1,320 @@
+{
+  "source": "/mnt/data/modeltest/GovScheme/data/Government_Scheme_Eligibility_Upgraded.xlsx",
+  "experiments": [
+    {
+      "dataset": "random_80_20",
+      "model": "LogisticRegression",
+      "train_citizens": 4000,
+      "test_citizens": 1000,
+      "train_records": 80000,
+      "test_records": 20000,
+      "accuracy": 0.89905,
+      "precision": 0.8953188352377442,
+      "recall": 0.7700110952607386,
+      "f1_score": 0.827950575202386,
+      "precision_at_5": 0.8886000000000002,
+      "recall_at_5": 0.7458295454545455,
+      "confusion_matrix": [
+        [
+          13123,
+          568
+        ],
+        [
+          1451,
+          4858
+        ]
+      ],
+      "extra": {}
+    },
+    {
+      "dataset": "random_80_20",
+      "model": "DecisionTree",
+      "train_citizens": 4000,
+      "test_citizens": 1000,
+      "train_records": 80000,
+      "test_records": 20000,
+      "accuracy": 0.9816,
+      "precision": 0.9467589111144533,
+      "recall": 0.9977809478522746,
+      "f1_score": 0.9716005556413027,
+      "precision_at_5": 0.9392,
+      "recall_at_5": 0.7854732323232323,
+      "confusion_matrix": [
+        [
+          13337,
+          354
+        ],
+        [
+          14,
+          6295
+        ]
+      ],
+      "extra": {}
+    },
+    {
+      "dataset": "random_80_20",
+      "model": "RandomForest",
+      "train_citizens": 4000,
+      "test_citizens": 1000,
+      "train_records": 80000,
+      "test_records": 20000,
+      "accuracy": 0.97365,
+      "precision": 0.930336409645728,
+      "recall": 0.9906482802345855,
+      "f1_score": 0.9595455592231519,
+      "precision_at_5": 0.9558,
+      "recall_at_5": 0.8017732323232324,
+      "confusion_matrix": [
+        [
+          13223,
+          468
+        ],
+        [
+          59,
+          6250
+        ]
+      ],
+      "extra": {}
+    },
+    {
+      "dataset": "random_70_30",
+      "model": "LogisticRegression",
+      "train_citizens": 3500,
+      "test_citizens": 1500,
+      "train_records": 70000,
+      "test_records": 30000,
+      "accuracy": 0.9021666666666667,
+      "precision": 0.9010840108401084,
+      "recall": 0.7743198899121414,
+      "f1_score": 0.8329063478508397,
+      "precision_at_5": 0.8971999999999998,
+      "recall_at_5": 0.752814454064454,
+      "confusion_matrix": [
+        [
+          19750,
+          803
+        ],
+        [
+          2132,
+          7315
+        ]
+      ],
+      "extra": {}
+    },
+    {
+      "dataset": "random_70_30",
+      "model": "DecisionTree",
+      "train_citizens": 3500,
+      "test_citizens": 1500,
+      "train_records": 70000,
+      "test_records": 30000,
+      "accuracy": 0.9813,
+      "precision": 0.9471618357487923,
+      "recall": 0.9961892664337885,
+      "f1_score": 0.9710571119021824,
+      "precision_at_5": 0.9422666666666667,
+      "recall_at_5": 0.7875726791726791,
+      "confusion_matrix": [
+        [
+          20028,
+          525
+        ],
+        [
+          36,
+          9411
+        ]
+      ],
+      "extra": {}
+    },
+    {
+      "dataset": "random_70_30",
+      "model": "RandomForest",
+      "train_citizens": 3500,
+      "test_citizens": 1500,
+      "train_records": 70000,
+      "test_records": 30000,
+      "accuracy": 0.9749333333333333,
+      "precision": 0.9323719542516161,
+      "recall": 0.992378532867577,
+      "f1_score": 0.9614398523228387,
+      "precision_at_5": 0.9577333333333333,
+      "recall_at_5": 0.8028885521885523,
+      "confusion_matrix": [
+        [
+          19873,
+          680
+        ],
+        [
+          72,
+          9375
+        ]
+      ],
+      "extra": {}
+    },
+    {
+      "dataset": "random_90_10",
+      "model": "LogisticRegression",
+      "train_citizens": 4500,
+      "test_citizens": 500,
+      "train_records": 90000,
+      "test_records": 10000,
+      "accuracy": 0.9014,
+      "precision": 0.9089563286454478,
+      "recall": 0.7684605757196495,
+      "f1_score": 0.8328246863343506,
+      "precision_at_5": 0.9052,
+      "recall_at_5": 0.7487602453102453,
+      "confusion_matrix": [
+        [
+          6558,
+          246
+        ],
+        [
+          740,
+          2456
+        ]
+      ],
+      "extra": {}
+    },
+    {
+      "dataset": "random_90_10",
+      "model": "DecisionTree",
+      "train_citizens": 4500,
+      "test_citizens": 500,
+      "train_records": 90000,
+      "test_records": 10000,
+      "accuracy": 0.9845,
+      "precision": 0.9586726998491705,
+      "recall": 0.9943679599499374,
+      "f1_score": 0.9761941330056827,
+      "precision_at_5": 0.948,
+      "recall_at_5": 0.7814453102453103,
+      "confusion_matrix": [
+        [
+          6667,
+          137
+        ],
+        [
+          18,
+          3178
+        ]
+      ],
+      "extra": {}
+    },
+    {
+      "dataset": "random_90_10",
+      "model": "RandomForest",
+      "train_citizens": 4500,
+      "test_citizens": 500,
+      "train_records": 90000,
+      "test_records": 10000,
+      "accuracy": 0.9833,
+      "precision": 0.9632915264606914,
+      "recall": 0.9852941176470589,
+      "f1_score": 0.974168600154679,
+      "precision_at_5": 0.9636,
+      "recall_at_5": 0.7967786435786436,
+      "confusion_matrix": [
+        [
+          6684,
+          120
+        ],
+        [
+          47,
+          3149
+        ]
+      ],
+      "extra": {}
+    },
+    {
+      "dataset": "state_holdout",
+      "model": "LogisticRegression",
+      "train_citizens": 3973,
+      "test_citizens": 1027,
+      "train_records": 79460,
+      "test_records": 20540,
+      "accuracy": 0.9042356377799415,
+      "precision": 0.9025219102128421,
+      "recall": 0.7801484230055659,
+      "f1_score": 0.8368853138734555,
+      "precision_at_5": 0.8991236611489777,
+      "recall_at_5": 0.7515740237259224,
+      "confusion_matrix": [
+        [
+          13527,
+          545
+        ],
+        [
+          1422,
+          5046
+        ]
+      ],
+      "extra": {
+        "held_out_states": [
+          "Karnataka",
+          "Maharashtra"
+        ]
+      }
+    },
+    {
+      "dataset": "state_holdout",
+      "model": "DecisionTree",
+      "train_citizens": 3973,
+      "test_citizens": 1027,
+      "train_records": 79460,
+      "test_records": 20540,
+      "accuracy": 0.9821324245374878,
+      "precision": 0.9489330389992642,
+      "recall": 0.9969078540507111,
+      "f1_score": 0.972329035663123,
+      "precision_at_5": 0.943524829600779,
+      "recall_at_5": 0.7867671006911513,
+      "confusion_matrix": [
+        [
+          13725,
+          347
+        ],
+        [
+          20,
+          6448
+        ]
+      ],
+      "extra": {
+        "held_out_states": [
+          "Karnataka",
+          "Maharashtra"
+        ]
+      }
+    },
+    {
+      "dataset": "state_holdout",
+      "model": "RandomForest",
+      "train_citizens": 3973,
+      "test_citizens": 1027,
+      "train_records": 79460,
+      "test_records": 20540,
+      "accuracy": 0.9817916260954236,
+      "precision": 0.9540983606557377,
+      "recall": 0.9897959183673469,
+      "f1_score": 0.9716193656093489,
+      "precision_at_5": 0.9587147030185005,
+      "recall_at_5": 0.8016579060882859,
+      "confusion_matrix": [
+        [
+          13764,
+          308
+        ],
+        [
+          66,
+          6402
+        ]
+      ],
+      "extra": {
+        "held_out_states": [
+          "Karnataka",
+          "Maharashtra"
+        ]
+      }
+    }
+  ]
+}

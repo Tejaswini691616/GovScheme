@@ -1,0 +1,36 @@
+<!-- PATH: GovScheme/templates/dashboard/dashboard.html -->
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Dashboard | SmartGov AI{% endblock %}
+{% block content %}
+<div class="dashboard-layout">
+  {% include "includes/dashboard_sidebar.html" %}
+  <main class="dashboard-content container-fluid py-4">
+    <section class="welcome-banner mb-4">
+      <div class="welcome-left">
+        <div class="small text-success fw-semibold">SMART CITIZEN BENEFITS ASSISTANT</div>
+        <h2 class="mt-2">Your Government Benefits, Simplified.</h2>
+        <p>Welcome, <strong>{{ user.full_name }}</strong>. SmartGov AI combines configured eligibility rules with ML ranking to find relevant schemes.</p>
+        <form class="scheme-search" action="{{ url_for('scheme.schemes_list') }}" method="get"><input name="q" data-i18n-placeholder="Search" placeholder="Search government schemes, benefits or problems..."><button type="submit" class="btn btn-sg-primary" data-i18n="Search"><i class="bi bi-search"></i> Search</button></form>
+      </div>
+      <div class="welcome-right"><img src="{{ url_for('static', filename='images/logos/welcome.png') }}" alt="Citizen services illustration"></div>
+    </section>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-3"><div class="card border-0 shadow-sm p-3"><div class="text-muted small">Profile completeness</div><div class="fs-3 fw-bold">{{ completeness.percentage }}%</div><div class="progress"><div class="progress-bar" style="width:{{ completeness.percentage }}%"></div></div></div></div>
+      <div class="col-md-3"><div class="card border-0 shadow-sm p-3"><div class="text-muted small">Potentially eligible</div><div class="fs-3 fw-bold">{{ eligible_count }}</div><a href="{{ url_for('scheme.schemes_list') }}" class="small">Explore schemes</a></div></div>
+      <div class="col-md-3"><div class="card border-0 shadow-sm p-3"><div class="text-muted small">Applications</div><div class="fs-3 fw-bold">{{ applications_count }}</div><a href="{{ url_for('application.applications_list') }}" class="small">Track applications</a></div></div>
+      <div class="col-md-3"><div class="card border-0 shadow-sm p-3"><div class="text-muted small">Saved schemes</div><div class="fs-3 fw-bold">{{ saved_schemes|length }}</div><a href="{{ url_for('scheme.saved_schemes_list') }}" class="small">Open saved schemes</a></div></div>
+    </div>
+
+    <section class="card border-0 shadow-sm p-4 mb-4"><div class="d-flex justify-content-between align-items-center"><div><h4 class="mb-1">Citizen Journey</h4><p class="text-muted small mb-0">Discover → Check → Prepare → Apply → Track → Support</p></div><a class="btn btn-sm btn-outline-success" href="{{ url_for('eligibility.eligibility') }}">Check Eligibility</a></div><div class="row g-2 mt-3">{% for step in journey %}<div class="col-6 col-md"><div class="p-2 rounded border text-center small {{ 'border-success bg-light' if step.done else '' }}"><i class="bi {{ 'bi-check-circle-fill text-success' if step.done else 'bi-circle' }}"></i><br>{{ step.label }}</div></div>{% endfor %}</div></section>
+
+    <section class="mb-4"><div class="d-flex justify-content-between align-items-center mb-3"><div><h4 class="mb-0">Recommended for You</h4><span class="small text-muted">Rule-filtered, then ML-ranked. Model score is not official eligibility.</span></div><a href="{{ url_for('scheme.schemes_list') }}">View all</a></div><div class="row g-3">
+      {% for rec in recommendations %}<div class="col-lg-4 col-md-6"><div class="sg-scheme-card h-100 p-3"><div class="d-flex justify-content-between"><span class="badge bg-success-subtle text-success">Potentially Eligible</span><span class="small fw-semibold">{{ rec.relevance_score }}% relevance</span></div><h5 class="mt-3">{{ rec.scheme.scheme_name }}</h5><div class="small text-muted mb-2">{{ rec.scheme.category }}</div><p class="small">{{ rec.scheme.description }}</p><div class="small"><strong>Why recommended?</strong>{% for m in rec.result.matched[:4] %}<div>✓ {{ m }}</div>{% endfor %}</div><div class="mt-3 d-flex gap-2"><a class="btn btn-sm btn-sg-primary" href="{{ url_for('scheme.scheme_details', scheme_id=rec.scheme.scheme_id) }}">View Details</a>{% if rec.scheme.application_link %}<a class="btn btn-sm btn-outline-success" target="_blank" rel="noopener" href="{{ rec.scheme.application_link }}">Official Portal</a>{% endif %}</div></div></div>{% else %}<div class="alert alert-info">No potentially eligible recommendations yet. Complete more profile information to improve matching.</div>{% endfor %}
+    </div></section>
+
+    <section class="row g-3"><div class="col-lg-7"><div class="card border-0 shadow-sm p-4 h-100"><h5>AI Assistant</h5><p class="text-muted">Try: “Show farmer schemes”, “Am I eligible for PM-KISAN?”, “Open my applications”, or ask in your selected Indian language.</p><button class="btn btn-sg-primary" onclick="document.getElementById('sgChatFab').click()">Open Voice &amp; Text Assistant</button></div></div><div class="col-lg-5"><div class="card border-0 shadow-sm p-4 h-100"><h5>Document Readiness</h5><p class="text-muted small">Check which application information is ready and review DigiLocker availability before starting an application.</p><a class="btn btn-outline-success" href="{{ url_for('documents.document_readiness') }}">Check readiness</a></div></div></section>
+
+    <div class="alert alert-secondary small mt-4">{{ disclaimer }}</div>
+  </main>
+</div>
+{% endblock %}

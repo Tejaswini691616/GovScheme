@@ -1,0 +1,140 @@
+.help-header {
+    margin-bottom: 35px;
+}
+
+.help-header h2 {
+    font-size: 34px;
+    font-weight: 700;
+    color: #2E7D32;
+    margin-bottom: 8px;
+}
+
+.help-header p {
+    color: #666;
+    font-size: 16px;
+}
+
+.help-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.help-card {
+    background: #fff;
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.06);
+    transition: .3s;
+}
+
+.help-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,.10);
+}
+
+.help-card > i {
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #E8F5E9;
+    color: #2E7D32;
+    border-radius: 13px;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.help-card h4 {
+    font-size: 19px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.help-card p {
+    color: #666;
+    line-height: 1.7;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.help-link {
+    color: #2E7D32;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.help-link i {
+    margin-left: 5px;
+}
+
+.support-card {
+    margin-top: 30px;
+    padding: 28px 30px;
+    background: #E8F5E9;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.support-icon {
+    width: 55px;
+    height: 55px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #fff;
+    color: #2E7D32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.support-card h4 {
+    margin: 0 0 5px;
+    font-weight: 700;
+}
+
+.support-card p {
+    margin: 0;
+    color: #555;
+}
+
+.support-btn {
+    margin-left: auto;
+    background: #2E7D32;
+    color: #fff;
+    text-decoration: none;
+    padding: 11px 20px;
+    border-radius: 9px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.support-btn:hover {
+    background: #1B5E20;
+    color: #fff;
+}
+
+@media (max-width: 992px) {
+
+    .help-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .support-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .support-btn {
+        margin-left: 0;
+    }
+
+}

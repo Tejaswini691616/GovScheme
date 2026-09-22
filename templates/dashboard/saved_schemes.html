@@ -1,0 +1,151 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}Saved Schemes | SmartGov AI{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-layout">
+
+    {% include "includes/dashboard_sidebar.html" %}
+
+    <main class="dashboard-content">
+
+        <section class="saved-header">
+
+            <h2>❤️ Saved Schemes</h2>
+
+            <p>
+                Access your favourite government schemes anytime.
+            </p>
+
+        </section>
+
+        <section class="saved-grid">
+
+            <!-- Card 1 -->
+
+            <div class="saved-card">
+
+                <div class="saved-top">
+
+                    <img src="{{ url_for('static', filename='images/schemes/ayushman_bharat.png') }}" alt="Ayushman Bharat">
+
+                    <i class="bi bi-heart-fill favourite"></i>
+
+                </div>
+
+                <h4>Ayushman Bharat</h4>
+
+                <span class="category">Healthcare</span>
+
+                <p>
+
+                    Free healthcare coverage for eligible families across India.
+
+                </p>
+
+                <div class="saved-buttons">
+
+                    <a href="#" class="details-btn">
+
+                        View Details
+
+                    </a>
+
+                    <button class="remove-btn">
+
+                        Remove
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Card 2 -->
+
+            <div class="saved-card">
+
+                <div class="saved-top">
+
+                    <img src="{{ url_for('static', filename='images/schemes/pm_kisan.png') }}" alt="PM Kisan">
+
+                    <i class="bi bi-heart-fill favourite"></i>
+
+                </div>
+
+                <h4>PM Kisan Samman Nidhi</h4>
+
+                <span class="category">Agriculture</span>
+
+                <p>
+
+                    Financial support provided directly to eligible farmers.
+
+                </p>
+
+                <div class="saved-buttons">
+
+                    <a href="#" class="details-btn">
+
+                        View Details
+
+                    </a>
+
+                    <button class="remove-btn">
+
+                        Remove
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Card 3 -->
+
+            <div class="saved-card">
+
+                <div class="saved-top">
+
+                    <img src="{{ url_for('static', filename='images/schemes/pm_scholarship.png') }}" alt="PM Scholarship">
+
+                    <i class="bi bi-heart-fill favourite"></i>
+
+                </div>
+
+                <h4>PM Scholarship</h4>
+
+                <span class="category">Education</span>
+
+                <p>
+
+                    Scholarship support for deserving students pursuing higher education.
+
+                </p>
+
+                <div class="saved-buttons">
+
+                    <a href="#" class="details-btn">
+
+                        View Details
+
+                    </a>
+
+                    <button class="remove-btn">
+
+                        Remove
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

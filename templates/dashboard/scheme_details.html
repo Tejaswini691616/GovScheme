@@ -1,0 +1,324 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}{{ scheme.scheme_name }} | Scheme Details | SmartGov AI{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-layout">
+
+    {% include "includes/dashboard_sidebar.html" %}
+
+    <main class="dashboard-content">
+
+        <!-- Back Button -->
+        <a href="{{ url_for('scheme.schemes_list') }}" class="back-btn mb-3 d-inline-flex align-items-center text-decoration-none">
+            <i class="bi bi-arrow-left me-2"></i>
+            Back to Schemes
+        </a>
+
+        <!-- Hero Card -->
+        <section class="scheme-hero-card mb-4 p-4 rounded shadow-sm bg-white">
+            <div class="scheme-main-info">
+                <div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-2">
+                    <span class="scheme-category badge bg-light text-dark border fs-6 px-3 py-2">
+                        <i class="bi bi-tag-fill me-1 text-primary"></i> {{ scheme.category }}
+                    </span>
+                    <div>
+                        {% if scheme.rpa_status == 'SUCCESS' %}
+                            <span class="badge bg-success fs-6 px-3 py-2">
+                                <i class="bi bi-patch-check-fill me-1"></i> RPA Verified
+                            </span>
+                        {% elif scheme.rpa_status in ['TIMEOUT', 'DNS_ERROR', 'UNAVAILABLE'] %}
+                            <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                                <i class="bi bi-exclamation-triangle-fill me-1"></i> Government Source Unavailable
+                            </span>
+                        {% elif scheme.rpa_status == 'ALERT_ERROR' %}
+                            <span class="badge bg-info text-dark fs-6 px-3 py-2">
+                                <i class="bi bi-bell-fill me-1"></i> Portal Notice Active
+                            </span>
+                        {% else %}
+                            <span class="badge bg-secondary fs-6 px-3 py-2">
+                                <i class="bi bi-clock me-1"></i> Status: {{ scheme.rpa_status or 'Pending RPA' }}
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <h2 class="fw-bold text-dark mt-2 mb-2">{{ scheme.scheme_name }}</h2>
+                <p class="text-muted fs-6 mb-3">
+                    {{ scheme.description or "Government welfare initiative aimed at empowering eligible citizens across India." }}
+                </p>
+
+                <!-- Personal Eligibility Result if available -->
+                {% if user_result %}
+                <div class="p-3 mb-3 rounded border {% if user_result.eligibility_status == 'Eligible' %}bg-success-subtle border-success{% else %}bg-danger-subtle border-danger{% endif %}">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <strong>Your Eligibility: </strong>
+                            <span class="badge {% if user_result.eligibility_status == 'Eligible' %}bg-success{% else %}bg-danger{% endif %} fs-6 ms-1">
+                                {{ user_result.eligibility_status }}
+                            </span>
+                            <span class="ms-2 text-muted">({{ user_result.eligibility_score }}% Criteria Match)</span>
+                        </div>
+                    </div>
+                    <p class="small mb-0 mt-1 text-secondary">{{ user_result.recommendation_reason }}</p>
+                </div>
+                {% endif %}
+
+                <div class="scheme-actions d-flex gap-2 flex-wrap mt-3">
+                    {% if scheme.official_url %}
+                    <a href="{{ scheme.official_url }}" target="_blank" class="btn btn-outline-secondary">
+                        <i class="bi bi-box-arrow-up-right me-1"></i> Official Government Source
+                    </a>
+                    {% endif %}
+
+                    {% if scheme.application_url or scheme.official_url %}
+                    <a href="{{ scheme.application_url or scheme.official_url }}" target="_blank" class="btn btn-success">
+                        <i class="bi bi-send-fill me-1"></i> Apply on Official Portal
+                    </a>
+                    {% endif %}
+
+                    <a href="{{ url_for('eligibility.eligibility') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-clipboard-check me-1"></i> Check My Eligibility
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Official Government Source & RPA Information Section -->
+        <section class="detail-card card border-0 shadow-sm p-4 mb-4 bg-white">
+            <h4 class="fw-bold mb-3 d-flex align-items-center">
+                <i class="bi bi-cpu-fill text-primary me-2"></i>
+                Official Source & RPA Automation Status
+            </h4>
+
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <div class="p-3 bg-light rounded border">
+                        <small class="text-muted d-block mb-1">Official Government Source</small>
+                        <h6 class="fw-bold mb-1">
+                            {{ scheme.source_name or "Official Government Portal" }}
+                        </h6>
+                        {% if scheme.official_url %}
+                        <a href="{{ scheme.official_url }}" target="_blank" class="small text-decoration-none">
+                            <i class="bi bi-link-45deg"></i> {{ scheme.official_url }}
+                        </a>
+                        {% else %}
+                        <small class="text-muted">Direct URL pending verification</small>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="p-3 bg-light rounded border">
+                        <small class="text-muted d-block mb-1">Automated RPA Verification</small>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            {% if scheme.rpa_status == 'SUCCESS' %}
+                                <span class="badge bg-success">
+                                    <i class="bi bi-check-circle-fill me-1"></i> SUCCESS
+                                </span>
+                                <small class="text-success fw-semibold">Live verified government information</small>
+                            {% elif scheme.rpa_status == 'TIMEOUT' %}
+                                <span class="badge bg-warning text-dark">
+                                    <i class="bi bi-hourglass-split me-1"></i> TIMEOUT
+                                </span>
+                                <small class="text-muted">Government portal took > 20s to respond</small>
+                            {% elif scheme.rpa_status == 'DNS_ERROR' %}
+                                <span class="badge bg-danger">
+                                    <i class="bi bi-wifi-off me-1"></i> DNS_ERROR
+                                </span>
+                                <small class="text-muted">Government domain currently unresolved</small>
+                            {% elif scheme.rpa_status == 'ALERT_ERROR' %}
+                                <span class="badge bg-info text-dark">
+                                    <i class="bi bi-bell-fill me-1"></i> ALERT_NOTICE
+                                </span>
+                                <small class="text-muted">Official scheme closure/notice dialog captured</small>
+                            {% else %}
+                                <span class="badge bg-secondary">
+                                    {{ scheme.rpa_status or 'PENDING' }}
+                                </span>
+                                <small class="text-muted">Scheduled for background RPA refresh</small>
+                            {% endif %}
+                        </div>
+                        <small class="text-muted d-block">
+                            Last Checked: <strong>{{ scheme.rpa_last_checked or 'Pending check' }}</strong>
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extracted Content vs Unavailable Message -->
+            {% if scheme.rpa_status == 'SUCCESS' and scheme.rpa_content %}
+            <div class="mt-3">
+                <label class="form-label fw-semibold text-success">
+                    <i class="bi bi-file-earmark-text-fill me-1"></i> RPA-Collected Information from Official Source
+                </label>
+                <div class="p-3 bg-light border rounded" style="max-height: 250px; overflow-y: auto; font-family: monospace; font-size: 0.88rem; white-space: pre-wrap; line-height: 1.5;">
+{{ scheme.rpa_content }}
+                </div>
+                <small class="text-muted mt-1 d-block">
+                    <i class="bi bi-shield-check text-success me-1"></i> Collected directly from official government domain via Selenium RPA.
+                </small>
+            </div>
+            {% elif scheme.rpa_status in ['TIMEOUT', 'DNS_ERROR', 'UNAVAILABLE'] %}
+            <div class="alert alert-warning border-warning d-flex align-items-center mt-2 mb-0" role="alert">
+                <i class="bi bi-exclamation-triangle-fill fs-4 me-3 text-warning"></i>
+                <div>
+                    <strong>Government source currently unavailable:</strong>
+                    <div class="small text-muted">
+                        {% if scheme.rpa_status == 'TIMEOUT' %}
+                            The official government portal ({{ scheme.official_url }}) is experiencing high traffic or slow response times.
+                        {% elif scheme.rpa_status == 'DNS_ERROR' %}
+                            The official portal domain is temporarily not resolving from this network.
+                        {% else %}
+                            The official portal is temporarily unavailable.
+                        {% endif %}
+                        No fabricated data is displayed. Please visit the official URL directly or check back later.
+                    </div>
+                </div>
+            </div>
+            {% elif scheme.rpa_status == 'ALERT_ERROR' %}
+            <div class="alert alert-info border-info d-flex align-items-center mt-2 mb-0" role="alert">
+                <i class="bi bi-info-circle-fill fs-4 me-3 text-info"></i>
+                <div>
+                    <strong>Official Notice Active on Government Portal:</strong>
+                    <div class="small text-muted">
+                        {{ scheme.rpa_error or "The government portal issued a modal notice regarding this scheme." }}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </section>
+
+        <!-- About Card -->
+        <section class="detail-card card border-0 shadow-sm p-4 mb-4 bg-white">
+            <h4 class="fw-bold mb-3">About the Scheme</h4>
+            <p class="text-secondary leading-relaxed mb-0">
+                {{ scheme.description or "This scheme provides targeted welfare assistance and empowerment opportunities to citizens meeting the eligibility criteria defined by the Government of India." }}
+            </p>
+        </section>
+
+        <!-- Benefits Card -->
+        <section class="detail-card card border-0 shadow-sm p-4 mb-4 bg-white">
+            <h4 class="fw-bold mb-3">Benefits</h4>
+            {% if scheme.benefits %}
+            <p class="text-secondary mb-0">{{ scheme.benefits }}</p>
+            {% else %}
+            <ul class="mb-0 text-secondary">
+                <li>Direct benefit transfer (DBT) or structured financial grant.</li>
+                <li>Comprehensive welfare support tailored to eligible beneficiaries.</li>
+                <li>Official transparency under central/state government guidelines.</li>
+            </ul>
+            {% endif %}
+        </section>
+
+        <!-- Eligibility Criteria Card -->
+        <section class="detail-card card border-0 shadow-sm p-4 mb-4 bg-white">
+            <h4 class="fw-bold mb-3">Eligibility Criteria</h4>
+            <ul class="mb-0 text-secondary">
+                {% if scheme.min_age or scheme.max_age %}
+                <li>
+                    <strong>Age: </strong>
+                    {% if scheme.min_age and scheme.max_age %}
+                        Between {{ scheme.min_age|int }} and {{ scheme.max_age|int }} years.
+                    {% elif scheme.min_age %}
+                        Minimum {{ scheme.min_age|int }} years.
+                    {% elif scheme.max_age %}
+                        Maximum {{ scheme.max_age|int }} years.
+                    {% endif %}
+                </li>
+                {% endif %}
+
+                {% if scheme.income_limit %}
+                <li>
+                    <strong>Income Limit: </strong> Annual family income must not exceed ₹{{ "{:,.0f}".format(scheme.income_limit) }}.
+                </li>
+                {% endif %}
+
+                {% if scheme.caste_requirement %}
+                <li>
+                    <strong>Category / Caste: </strong> {{ scheme.caste_requirement }}
+                </li>
+                {% endif %}
+
+                {% if scheme.farmer_required %}
+                <li><strong>Occupation: </strong> Applicant must be a farmer / landholder.</li>
+                {% endif %}
+
+                {% if scheme.bpl_required %}
+                <li><strong>Economic Status: </strong> Applicant must belong to BPL (Below Poverty Line) category.</li>
+                {% endif %}
+
+                {% if scheme.student_required %}
+                <li><strong>Education: </strong> Applicant must be an enrolled student.</li>
+                {% endif %}
+
+                {% if scheme.disability_required %}
+                <li><strong>Specially Abled: </strong> Scheme is reserved for persons with disabilities.</li>
+                {% endif %}
+
+                {% if scheme.widow_required %}
+                <li><strong>Special Category: </strong> Available for eligible widows.</li>
+                {% endif %}
+            </ul>
+        </section>
+
+        <!-- Required Documents -->
+        <section class="detail-card card border-0 shadow-sm p-4 mb-4 bg-white">
+            <h4 class="fw-bold mb-3">
+                <i class="bi bi-file-earmark-text-fill text-primary me-1"></i> Required Documents
+            </h4>
+            {% if scheme.documents_required %}
+            <p class="text-secondary mb-0">{{ scheme.documents_required }}</p>
+            {% else %}
+            <ul class="mb-0 text-secondary">
+                <li>Aadhaar Card for identity verification.</li>
+                <li>Active Bank Account Details (Passbook / IFSC code).</li>
+                <li>Category / Caste certificate (if applicable).</li>
+                <li>Income certificate issued by competent state authority (if applicable).</li>
+                <li>Passport size photograph and active mobile number.</li>
+            </ul>
+            {% endif %}
+        </section>
+
+        <!-- Application Process -->
+        <section class="detail-card card border-0 shadow-sm p-4 mb-4 bg-white">
+            <h4 class="fw-bold mb-3">
+                <i class="bi bi-list-check text-primary me-1"></i> Application Process
+            </h4>
+            <ol class="mb-0 text-secondary ps-3">
+                <li>Visit the official portal at <a href="{{ scheme.official_url or '#' }}" target="_blank">{{ scheme.official_url or 'the official portal' }}</a>.</li>
+                <li>Register as a new applicant or sign in with your credentials.</li>
+                <li>Fill in the citizen details accurately matching your official identity documents.</li>
+                <li>Upload necessary certificates, proof of income, and bank details.</li>
+                <li>Submit the application and note your acknowledgment number for tracking.</li>
+            </ol>
+        </section>
+
+        <!-- Related Schemes -->
+        {% if related_schemes %}
+        <section class="related-schemes mt-4">
+            <h4 class="fw-bold mb-3">Related Schemes in {{ scheme.category }}</h4>
+            <div class="row g-3">
+                {% for rel in related_schemes %}
+                <div class="col-md-4">
+                    <div class="card border-0 shadow-sm p-3 h-100 bg-white">
+                        <span class="badge bg-light text-dark border mb-2 align-self-start">{{ rel.category }}</span>
+                        <h6 class="fw-bold mb-2">{{ rel.scheme_name }}</h6>
+                        <div class="mt-auto pt-2">
+                            <a href="{{ url_for('scheme.scheme_details', scheme_id=rel.scheme_id) }}" class="btn btn-outline-primary btn-sm w-100">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+    </main>
+
+</div>
+
+{% endblock %}

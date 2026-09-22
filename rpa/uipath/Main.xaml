@@ -1,0 +1,147 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="Main"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:uix="http://schemas.uipath.com/workflow/activities/uix"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+ xmlns:s="clr-namespace:System;assembly=mscorlib">
+  <!--
+    Yojana Bharath - SubmitSchemeApplication (Main.xaml)
+
+    HONESTY NOTE: this file was authored by hand following the documented
+    UiPath XAML schema and standard UiPath.UIAutomation.Activities usage.
+    It has NOT been opened or run in UiPath Studio (Studio is not available
+    in the build environment for this prototype), so treat it as a
+    structurally-correct STARTING POINT to open, review, and adjust
+    selectors for in Studio - not as a tested, ready-to-run robot.
+
+    Flow implemented (matches rpa/application_request.py's structured
+    input/output and spec sections 56-59):
+      Open Browser -> Navigate to in_PortalUrl -> Type citizen/scheme info
+      into the form -> Click Submit -> Get Text (reference number) ->
+      set outputs -> Close Browser. Wrapped in a TryCatch so portal
+      failures return "Needs Manual Action" instead of crashing (spec 59).
+
+      No activity here performs or automates CAPTCHA/OTP/biometric/login
+      bypass (spec section 56/47) - if the portal presents one, the
+      workflow should stop in the Catch block and report
+      "Needs Manual Action", never attempt to solve it.
+  -->
+  <x:Members>
+    <x:Property Name="in_ApplicationId" Type="InArgument(x:Int32)" />
+    <x:Property Name="in_CitizenFullName" Type="InArgument(x:String)" />
+    <x:Property Name="in_CitizenAnnualIncome" Type="InArgument(x:Int32)" />
+    <x:Property Name="in_SchemeId" Type="InArgument(x:String)" />
+    <x:Property Name="in_SchemeName" Type="InArgument(x:String)" />
+    <x:Property Name="in_PortalUrl" Type="InArgument(x:String)" />
+    <x:Property Name="out_Status" Type="OutArgument(x:String)" />
+    <x:Property Name="out_ApplicationNumber" Type="OutArgument(x:String)" />
+    <x:Property Name="out_Remarks" Type="OutArgument(x:String)" />
+  </x:Members>
+
+  <TextExpression.NamespacesForImplementation>
+    <scg:List x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Collections.Generic</x:String>
+    </scg:List>
+  </TextExpression.NamespacesForImplementation>
+
+  <Sequence DisplayName="SubmitSchemeApplication" sap2010:WorkflowViewState.IdRef="Sequence_Main">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Name="referenceNumber" />
+      <Variable x:TypeArguments="ui:Browser" Name="portalBrowser" />
+    </Sequence.Variables>
+
+    <ui:LogMessage DisplayName="Log Start" Level="Info"
+        Message="[&quot;Yojana Bharath RPA: starting application &quot; + in_ApplicationId.ToString() + &quot; for scheme &quot; + in_SchemeId]" />
+
+    <TryCatch DisplayName="Portal Automation (Try/Catch per spec section 59)">
+      <TryCatch.Try>
+        <Sequence DisplayName="Open Portal And Submit">
+
+          <!-- Open portal -->
+          <ui:OpenBrowser DisplayName="Open Portal" Url="[in_PortalUrl]" Browser="[portalBrowser]" />
+
+          <!-- Navigate / wait for the application form to be ready -->
+          <ui:ElementExists DisplayName="Check Application Form Present"
+              Selector="[&quot;&lt;webctrl id='application-form' /&gt;&quot;]" />
+
+          <!-- No CAPTCHA, OTP, biometric, or login bypass is attempted. If the reviewed portal blocks automation, the TryCatch reports Needs Manual Action. -->
+
+          <Sequence DisplayName="Portal Data Entry And Submit">
+                <!-- Enter repetitive citizen/scheme information -->
+                <ui:TypeInto DisplayName="Type Full Name"
+                    Selector="[&quot;&lt;webctrl id='applicant-name' /&gt;&quot;]"
+                    Text="[in_CitizenFullName]" />
+                <ui:TypeInto DisplayName="Type Scheme Name"
+                    Selector="[&quot;&lt;webctrl id='scheme-name' /&gt;&quot;]"
+                    Text="[in_SchemeName]" />
+                <ui:TypeInto DisplayName="Type Annual Income"
+                    Selector="[&quot;&lt;webctrl id='annual-income' /&gt;&quot;]"
+                    Text="[in_CitizenAnnualIncome.ToString()]" />
+
+                <!-- Document submission is deliberately not fabricated here.
+                     If the reviewed government portal requires a document upload,
+                     stop for manual action unless the exact permitted selector and
+                     document source have been configured in Studio. -->
+                <ui:LogMessage DisplayName="Document Submission Policy" Level="Info"
+                    Message="[&quot;Document submission requires a reviewed portal-specific workflow; this process will not invent a selector or upload source.&quot;]" />
+
+                <!-- Submit only where the portal permits automated submission -->
+                <ui:Click DisplayName="Click Submit"
+                    Selector="[&quot;&lt;webctrl id='submit-application' /&gt;&quot;]" />
+
+                <!-- Read back the reference number the portal shows -->
+                <ui:GetText DisplayName="Get Application Reference Number"
+                    Selector="[&quot;&lt;webctrl id='application-reference' /&gt;&quot;]"
+                    Text="[referenceNumber]" />
+
+                <Assign DisplayName="Set Status Completed">
+                  <Assign.To><OutArgument x:TypeArguments="x:String">[out_Status]</OutArgument></Assign.To>
+                  <Assign.Value><InArgument x:TypeArguments="x:String">Completed</InArgument></Assign.Value>
+                </Assign>
+                <Assign DisplayName="Set Application Number">
+                  <Assign.To><OutArgument x:TypeArguments="x:String">[out_ApplicationNumber]</OutArgument></Assign.To>
+                  <Assign.Value><InArgument x:TypeArguments="x:String">[referenceNumber]</InArgument></Assign.Value>
+                </Assign>
+                <Assign DisplayName="Set Remarks">
+                  <Assign.To><OutArgument x:TypeArguments="x:String">[out_Remarks]</OutArgument></Assign.To>
+                  <Assign.Value><InArgument x:TypeArguments="x:String">Submitted via UiPath robot.</InArgument></Assign.Value>
+                </Assign>
+          </Sequence>
+
+          <ui:CloseBrowser DisplayName="Close Portal" Browser="[portalBrowser]" />
+        </Sequence>
+      </TryCatch.Try>
+
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" DisplayName="Catch Any Automation Failure">
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="ex" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="Handle Failure">
+              <ui:LogMessage DisplayName="Log Failure" Level="Error"
+                  Message="[&quot;RPA automation failed: &quot; + ex.Message]" />
+              <Assign DisplayName="Set Status Failed">
+                <Assign.To><OutArgument x:TypeArguments="x:String">[out_Status]</OutArgument></Assign.To>
+                <Assign.Value><InArgument x:TypeArguments="x:String">Needs Manual Action</InArgument></Assign.Value>
+              </Assign>
+              <Assign DisplayName="Set Remarks Failure">
+                <Assign.To><OutArgument x:TypeArguments="x:String">[out_Remarks]</OutArgument></Assign.To>
+                <Assign.Value><InArgument x:TypeArguments="x:String">[&quot;Automation error: &quot; + ex.Message]</InArgument></Assign.Value>
+              </Assign>
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+
+    <ui:LogMessage DisplayName="Log End" Level="Info"
+        Message="[&quot;Yojana Bharath RPA: finished application &quot; + in_ApplicationId.ToString() + &quot; with status &quot; + out_Status]" />
+  </Sequence>
+</Activity>

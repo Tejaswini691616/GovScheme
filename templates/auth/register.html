@@ -1,0 +1,126 @@
+{# PATH: GovScheme/templates/auth/register.html #}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register - Yojana Bharath</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base/variables.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base/reset.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base/typography.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard/dashboard.css') }}">
+</head>
+<body style="background: var(--sg-bg);">
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-9">
+      <div class="text-center mb-4">
+        <span style="width:52px;height:52px;border-radius:50%;background:var(--sg-gradient-accent);display:inline-flex;align-items:center;justify-content:center;font-size:1.5rem;">🛡️</span>
+        <h3 class="mt-2 mb-0">Create your Yojana Bharath account</h3>
+        <div class="text-muted-sg small">Tell us a little about yourself so we can match you with the right schemes</div>
+      </div>
+      <div class="card border-0 shadow-sm p-4 p-md-5" style="border-radius: var(--sg-radius); border-top: 5px solid transparent; border-image: var(--sg-gradient-tricolor-hairline) 1;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        {% endwith %}
+        <form method="post">
+          <div class="sg-section-title"><span class="bar"></span><h6 class="mb-0 text-uppercase text-muted-sg">Basic Details</h6></div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label">Full Name</label>
+              <input type="text" name="full_name" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Password</label>
+              <input type="password" name="password" class="form-control" minlength="8" required>
+              <label class="form-label mt-2">Confirm Password</label>
+              <input type="password" name="confirm_password" class="form-control" minlength="8" required>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone</label>
+              <input type="text" name="phone" class="form-control">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Gender</label>
+              <select name="gender" class="form-select">
+                <option>Male</option><option>Female</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Age</label>
+              <input type="number" name="age" class="form-control" min="0" max="120">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Annual Family Income (₹)</label>
+              <input type="number" name="annual_income" class="form-control" min="0">
+            </div>
+          </div>
+
+          <div class="sg-section-title"><span class="bar"></span><h6 class="mb-0 text-uppercase text-muted-sg">Location &amp; Background</h6></div>
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label class="form-label">State</label>
+              <input type="text" name="state" class="form-control" placeholder="e.g. Karnataka">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">District</label>
+              <input type="text" name="district" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Education</label>
+              <select name="education" class="form-select">
+                <option>Below 10th</option><option>10th Pass</option><option>12th Pass</option>
+                <option>Diploma</option><option>Graduate</option><option>Post Graduate</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Occupation</label>
+              <input type="text" name="occupation" class="form-control" placeholder="e.g. Farmer">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Caste Category</label>
+              <select name="caste" class="form-select">
+                <option>General</option><option>OBC</option><option>SC</option><option>ST</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Land Holding (acres)</label>
+              <input type="number" step="0.1" name="land_holding_acres" class="form-control" min="0">
+            </div>
+          </div>
+
+          <div class="sg-section-title"><span class="bar"></span><h6 class="mb-0 text-uppercase text-muted-sg">Eligibility Flags</h6></div>
+          <div class="row g-3">
+            {% for field, label, icon in [('farmer','Farmer','bi-flower2'), ('student','Student','bi-mortarboard'),
+                                      ('bpl','BPL Card Holder','bi-card-checklist'),
+                                      ('disabled','Person with Disability','bi-universal-access'),
+                                      ('senior_citizen','Senior Citizen','bi-person-heart'),
+                                      ('widow','Widow','bi-person-badge')] %}
+            <div class="col-md-4">
+              <label class="form-label"><i class="bi {{ icon }} me-1 text-muted-sg"></i>{{ label }}</label>
+              <select name="{{ field }}" class="form-select">
+                <option value="No">No</option><option value="Yes">Yes</option>
+              </select>
+            </div>
+            {% endfor %}
+          </div>
+
+          <button type="submit" class="btn btn-sg-primary w-100 py-2 mt-4">Create Account</button>
+        </form>
+        <div class="text-center mt-3 small">
+          Already have an account? <a href="{{ url_for('auth.login') }}">Log in</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

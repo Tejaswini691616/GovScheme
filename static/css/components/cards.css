@@ -1,0 +1,19 @@
+.card{
+
+    border:none;
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow-sm);
+
+    transition:var(--transition);
+
+}
+
+.card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:var(--shadow-lg);
+
+}

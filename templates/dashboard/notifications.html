@@ -1,0 +1,164 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}Notifications | SmartGov AI{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-layout">
+
+    {% include "includes/dashboard_sidebar.html" %}
+
+    <main class="dashboard-content">
+
+        <section class="notifications-header">
+
+            <h2>Notifications</h2>
+
+            <p>
+                Stay updated with your latest applications, recommendations and newly launched government schemes.
+            </p>
+
+        </section>
+
+        <section class="notification-list">
+
+            <!-- Card 1 -->
+
+            <div class="notification-card primary">
+
+                <div class="notification-left">
+
+                    <div class="notification-icon">
+
+                        <i class="bi bi-stars"></i>
+
+                    </div>
+
+                </div>
+
+                <div class="notification-center">
+
+                    <div class="notification-top">
+
+                        <h4>New Scheme Available</h4>
+
+                        <span>5 mins ago</span>
+
+                    </div>
+
+                    <p>
+
+                        PM Solar Rooftop Scheme has been launched.
+                        Based on your profile you may be eligible.
+
+                    </p>
+
+                </div>
+
+                <div class="notification-right">
+
+                    <a href="#" class="notification-btn">
+
+                        View Details
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Card 2 -->
+
+            <div class="notification-card success">
+
+                <div class="notification-left">
+
+                    <div class="notification-icon">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                    </div>
+
+                </div>
+
+                <div class="notification-center">
+
+                    <div class="notification-top">
+
+                        <h4>Application Approved</h4>
+
+                        <span>Yesterday</span>
+
+                    </div>
+
+                    <p>
+
+                        Your PM Kisan Samman Nidhi application has been approved successfully.
+
+                    </p>
+
+                </div>
+
+                <div class="notification-right">
+
+                    <a href="#" class="notification-btn">
+
+                        View
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Card 3 -->
+
+            <div class="notification-card warning">
+
+                <div class="notification-left">
+
+                    <div class="notification-icon">
+
+                        <i class="bi bi-hourglass-split"></i>
+
+                    </div>
+
+                </div>
+
+                <div class="notification-center">
+
+                    <div class="notification-top">
+
+                        <h4>Application Under Review</h4>
+
+                        <span>2 days ago</span>
+
+                    </div>
+
+                    <p>
+
+                        Your Ayushman Bharat application is currently under verification.
+
+                    </p>
+
+                </div>
+
+                <div class="notification-right">
+
+                    <a href="#" class="notification-btn">
+
+                        Track
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

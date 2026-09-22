@@ -1,0 +1,67 @@
+{# PATH: GovScheme/templates/complaints/complaint_details.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}{{ complaint.complaint_number }} - Yojana Bharath{% endblock %}
+{% block content %}
+<a href="{{ url_for('complaint.complaints_list') }}" class="text-muted-sg small text-decoration-none"><i class="bi bi-arrow-left"></i> Back to Complaints</a>
+
+<div class="card border-0 shadow-sm mt-3 p-4" style="border-radius: var(--sg-radius);">
+  <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+    <div>
+      <h5 class="mb-1"><code>{{ complaint.complaint_number }}</code> &middot; {{ complaint.subject }}</h5>
+      <span class="text-muted-sg small">{{ complaint.category }} &middot; Raised {{ complaint.created_at }}</span>
+    </div>
+    <span class="badge
+      {% if complaint.status in ['RESOLVED'] %}bg-success
+      {% elif complaint.status in ['CLOSED'] %}bg-secondary
+      {% elif complaint.status in ['ESCALATED'] %}bg-danger
+      {% else %}bg-warning text-dark{% endif %}">
+      {{ complaint.status.replace('_',' ') }}
+    </span>
+  </div>
+
+  <hr>
+  <div class="mb-3" style="max-height:360px; overflow-y:auto;">
+    {% for m in messages %}
+    <div class="mb-3 {{ 'text-end' if m.sender_type == 'user' }}">
+      <div class="small text-muted-sg mb-1">
+        {% if m.sender_type == 'user' %}You{% elif m.sender_type == 'admin' %}Yojana Bharath Support Team{% else %}Yojana Bharath Assistant{% endif %}
+        &middot; {{ m.created_at }}
+      </div>
+      <div class="d-inline-block p-2 px-3 rounded-3 {{ 'bg-success text-white' if m.sender_type == 'user' else 'bg-light border' }}" style="max-width:80%; white-space:pre-wrap; text-align:left;">
+        {{ m.message }}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if complaint.status not in ['CLOSED'] %}
+  <form method="post" action="{{ url_for('complaint.reply_complaint', complaint_id=complaint.complaint_id) }}" class="d-flex gap-2">
+    <input type="text" name="message" id="replyMessage" class="form-control" placeholder="Add more information or a reply...">
+    <button type="button" id="replyVoiceBtn" class="btn btn-outline-secondary" title="Speak your reply"><i class="bi bi-mic"></i></button>
+    <button type="submit" class="btn btn-sg-primary">Send</button>
+  </form>
+  <div class="small text-muted-sg mt-1" id="replyVoiceStatus"></div>
+  <form method="post" action="{{ url_for('complaint.close_complaint', complaint_id=complaint.complaint_id) }}" class="mt-2">
+    <button type="submit" class="btn btn-sm btn-outline-secondary">Mark as Closed</button>
+  </form>
+  {% else %}
+  <div class="alert alert-secondary mb-0 small">This complaint is closed. Send a new message to reopen it.</div>
+  <form method="post" action="{{ url_for('complaint.reply_complaint', complaint_id=complaint.complaint_id) }}" class="d-flex gap-2 mt-2">
+    <input type="text" name="message" id="replyMessage" class="form-control" placeholder="Reopen with a new message...">
+    <button type="button" id="replyVoiceBtn" class="btn btn-outline-secondary" title="Speak your reply"><i class="bi bi-mic"></i></button>
+    <button type="submit" class="btn btn-sg-primary">Send</button>
+  </form>
+  <div class="small text-muted-sg mt-1" id="replyVoiceStatus"></div>
+  {% endif %}
+</div>
+
+<script src="{{ url_for('static', filename='js/voice_input.js') }}"></script>
+<script>
+  attachVoiceToField({
+    buttonId: 'replyVoiceBtn',
+    fieldId: 'replyMessage',
+    statusId: 'replyVoiceStatus',
+    localeCode: 'en-IN'
+  });
+</script>
+{% endblock %}

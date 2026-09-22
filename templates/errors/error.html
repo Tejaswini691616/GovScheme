@@ -1,0 +1,23 @@
+{# PATH: GovScheme/templates/errors/error.html #}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ code }} - Yojana Bharath</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base/variables.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base/reset.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base/typography.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard/dashboard.css') }}">
+</head>
+<body class="d-flex align-items-center justify-content-center" style="min-height:100vh;background:var(--sg-bg);">
+  <div class="text-center p-4">
+    <div style="font-size:3.5rem;font-family:'Baloo 2',sans-serif;color:var(--sg-primary);font-weight:800;">{{ code }}</div>
+    <h4 class="mb-2">{{ title }}</h4>
+    <p class="text-muted-sg">{{ message }}</p>
+    <a href="/" class="btn btn-sg-primary mt-2"><i class="bi bi-house-door"></i> Go to homepage</a>
+  </div>
+</body>
+</html>

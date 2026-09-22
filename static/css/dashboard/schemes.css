@@ -1,0 +1,292 @@
+/* ===========================
+      SCHEMES PAGE
+=========================== */
+
+.schemes-hero{
+
+    background:#F3FBF4;
+
+    border-radius:20px;
+
+    padding:40px;
+
+    margin-bottom:30px;
+}
+
+.schemes-hero h2{
+
+    font-size:34px;
+
+    font-weight:700;
+
+    color:#2E7D32;
+
+    margin-bottom:10px;
+}
+
+.schemes-hero p{
+
+    color:#666;
+
+    font-size:17px;
+}
+
+.scheme-search{
+
+    margin-bottom:25px;
+}
+
+.scheme-search .search-box{
+
+    position:relative;
+}
+
+.scheme-search input{
+
+    width:100%;
+
+    height:58px;
+
+    border:1px solid #ddd;
+
+    border-radius:15px;
+
+    padding-left:55px;
+
+    font-size:16px;
+}
+
+.scheme-search i{
+
+    position:absolute;
+
+    left:22px;
+
+    top:18px;
+
+    font-size:20px;
+
+    color:#888;
+}
+
+.scheme-filters{
+
+    display:flex;
+
+    gap:18px;
+
+    margin-bottom:35px;
+}
+
+.scheme-filters select{
+
+    height:48px;
+
+    padding:0 18px;
+
+    border:1px solid #ddd;
+
+    border-radius:12px;
+
+    background:#fff;
+}
+
+/* ===========================
+      SCHEME CARD
+=========================== */
+
+.all-schemes{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:25px;
+
+    margin-bottom:40px;
+}
+
+.scheme-card{
+
+    background:#fff;
+
+    border:1px solid #E8E8E8;
+
+    border-radius:18px;
+
+    padding:24px;
+
+    display:flex;
+
+    gap:20px;
+
+    align-items:flex-start;
+
+    transition:.3s;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.05);
+}
+
+.scheme-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.scheme-card img{
+
+    width:80px;
+
+    height:80px;
+
+    object-fit:contain;
+
+    background:#fff;
+
+    border-radius:50%;
+
+    border:1px solid #EEEEEE;
+
+    padding:8px;
+
+    flex-shrink:0;
+}
+
+.scheme-info{
+
+    flex:1;
+}
+
+.scheme-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:12px;
+}
+
+.scheme-header h4{
+
+    margin:0;
+
+    font-weight:700;
+
+    color:#222;
+}
+
+.favorite-btn{
+
+    border:none;
+
+    background:none;
+
+    font-size:22px;
+
+    color:#E53935;
+
+    cursor:pointer;
+}
+
+.category{
+
+    display:inline-block;
+
+    padding:6px 14px;
+
+    border-radius:30px;
+
+    background:#E8F5E9;
+
+    color:#2E7D32;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    margin-bottom:15px;
+}
+
+.scheme-info p{
+
+    color:#666;
+
+    margin-bottom:18px;
+}
+
+.scheme-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+}
+
+.eligible{
+
+    color:#2E7D32;
+
+    font-weight:600;
+}
+
+.view-btn{
+
+    background:#2E7D32;
+
+    color:#fff;
+
+    padding:10px 22px;
+
+    border-radius:10px;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.view-btn:hover{
+
+    background:#256428;
+
+    transform:translateY(-2px);
+
+    color:#fff;
+}
+
+@media (max-width:992px){
+
+    .all-schemes{
+
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* Category Colors */
+
+.agriculture{
+
+    background:#E8F5E9;
+
+    color:#2E7D32;
+}
+
+.healthcare{
+
+    background:#FDECEC;
+
+    color:#D32F2F;
+}
+
+.education{
+
+    background:#EAF2FF;
+
+    color:#1565C0;
+}

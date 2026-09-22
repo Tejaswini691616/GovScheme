@@ -1,0 +1,57 @@
+.categories-section{
+
+    padding:100px 0;
+
+    background:white;
+
+}
+
+.category-card{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    padding:35px 30px;
+
+    text-align:center;
+
+    transition:var(--transition);
+
+    box-shadow:var(--shadow-sm);
+
+    height:100%;
+
+}
+
+.category-card:hover{
+
+    transform:translateY(-12px);
+
+    box-shadow:var(--shadow-lg);
+
+}
+
+.category-card i{
+
+    font-size:3.5rem;
+
+    color:var(--secondary-color);
+
+    margin-bottom:25px;
+
+}
+
+.category-card h4{
+
+    color:var(--primary-color);
+
+    margin-bottom:15px;
+
+}
+
+.category-card p{
+
+    font-size:.96rem;
+
+}

@@ -1,0 +1,2 @@
+<!-- PATH: GovScheme/templates/admin/rpa_monitor.html -->
+{% extends "layouts/dashboard_base.html" %}{% block content %}<div class="container-fluid py-4"><h3>RPA Monitor</h3>{% for j in jobs %}<div class="card border-0 shadow-sm p-3 mb-2"><strong>Job #{{j.rpa_job_id}}</strong> · Application #{{j.application_id}} · {{j.status}}<div class="small text-muted">{{j.remarks or ''}}</div></div>{% else %}<div class="alert alert-light">No RPA jobs yet.</div>{% endfor %}</div>{% endblock %}

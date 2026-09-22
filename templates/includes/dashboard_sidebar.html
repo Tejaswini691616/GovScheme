@@ -1,0 +1,17 @@
+<!-- PATH: GovScheme/templates/includes/dashboard_sidebar.html -->
+<aside class="dashboard-sidebar">
+  <ul class="sidebar-menu">
+    <li><a href="{{ url_for('dashboard.dashboard_home') }}" data-i18n="Dashboard"><i class="bi bi-house-door"></i> Dashboard</a></li>
+    <li><a href="{{ url_for('scheme.schemes_list') }}" data-i18n="Schemes"><i class="bi bi-briefcase"></i> Schemes</a></li>
+    <li><a href="{{ url_for('application.applications_list') }}" data-i18n="Applications"><i class="bi bi-file-earmark-text"></i> Applications</a></li>
+    <li><a href="{{ url_for('scheme.saved_schemes_list') }}" data-i18n="Saved Schemes"><i class="bi bi-heart"></i> Saved Schemes</a></li>
+    <li><a href="{{ url_for('notification.notifications_list') }}" data-i18n="Notifications"><i class="bi bi-bell"></i> Notifications{% if unread_notifications %} <span class="badge bg-danger">{{ unread_notifications }}</span>{% endif %}</a></li>
+    <li><a href="{{ url_for('profile.profile_view') }}" data-i18n="Profile"><i class="bi bi-person"></i> Profile</a></li>
+    <li><a href="{{ url_for('settings.settings_page') }}" data-i18n="Settings"><i class="bi bi-gear"></i> Settings</a></li>
+    <li><a href="{{ url_for('dashboard.help_center') }}" data-i18n="Help & Support"><i class="bi bi-question-circle"></i> Help &amp; Support</a></li>
+    <li><a href="{{ url_for('complaint.complaints_list') }}"><i class="bi bi-life-preserver"></i> Customer Care</a></li>
+    <li><a href="{{ url_for('feedback.feedback_form') }}" data-i18n="Feedback"><i class="bi bi-star"></i> Feedback</a></li>
+      <li><a href="{{ url_for('scheme.scheme_updates') }}" data-i18n="New & Updated Schemes"><i class="bi bi-arrow-repeat"></i> New &amp; Updated Schemes</a></li>
+  </ul>
+  <div class="mission-card"><img src="{{ url_for('static', filename='images/logos/mission.png') }}" alt="Mission"><h5>Citizen First</h5><p>Discover, prepare, apply and track government benefits in one place.</p></div>
+</aside>
