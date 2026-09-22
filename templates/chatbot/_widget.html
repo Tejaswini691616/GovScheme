@@ -1,0 +1,9 @@
+<!-- PATH: GovScheme/templates/chatbot/_widget.html -->
+<button id="sgChatFab" class="sg-chat-fab" type="button" aria-label="Open SmartGov AI chatbot" title="SmartGov AI Assistant"><i class="bi bi-robot"></i></button>
+<div id="sgChatPanel" class="sg-chat-panel" aria-label="SmartGov AI Assistant">
+  <div class="sg-chat-header"><div><i class="bi bi-robot"></i> <strong>SmartGov AI Assistant</strong></div><div><button id="sgChatClear" class="btn btn-sm btn-link text-white">Clear</button><button id="sgChatClose" class="btn btn-sm btn-link text-white" aria-label="Close"><i class="bi bi-x-lg"></i></button></div></div>
+  <div class="px-2 pt-2"><select id="sgChatLanguage" class="form-select form-select-sm" aria-label="Chat language">{% for lang in supported_languages %}<option value="{{ lang }}" {{ 'selected' if lang == current_language }}>{{ lang }}</option>{% endfor %}</select></div>
+  <div id="sgChatStatus" class="px-2 small text-muted" aria-live="polite"></div>
+  <div id="sgChatMessages" class="sg-chat-messages" aria-live="polite"><div class="sg-chat-bubble bot">Ask about schemes, eligibility, applications, complaints or navigation.</div></div>
+  <div class="sg-chat-input-row"><button id="sgChatMic" class="btn btn-outline-secondary btn-sm" aria-label="Voice input"><i class="bi bi-mic"></i></button><input id="sgChatInput" class="form-control form-control-sm" placeholder="Type your question..." aria-label="Message"><button id="sgChatSend" class="btn btn-sm btn-success" aria-label="Send"><i class="bi bi-send"></i></button></div>
+</div>

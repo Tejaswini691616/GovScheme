@@ -1,0 +1,51 @@
+.features-section{
+
+    padding:100px 0;
+
+    background:#F8FAFC;
+
+}
+
+.feature-card{
+
+    background:white;
+
+    border-radius:20px;
+
+    padding:40px 30px;
+
+    text-align:center;
+
+    transition:var(--transition);
+
+    box-shadow:var(--shadow-sm);
+
+    height:100%;
+
+}
+
+.feature-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:var(--shadow-lg);
+
+}
+
+.feature-card i{
+
+    font-size:3.4rem;
+
+    color:var(--accent-color);
+
+    margin-bottom:20px;
+
+}
+
+.feature-card h4{
+
+    color:var(--primary-color);
+
+    margin-bottom:18px;
+
+}

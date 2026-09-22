@@ -1,0 +1,160 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}Government Schemes | SmartGov AI{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-layout">
+
+    {% include "includes/dashboard_sidebar.html" %}
+
+    <main class="dashboard-content">
+
+        <!-- Hero Section -->
+        <section class="schemes-hero mb-4 p-4 rounded shadow-sm bg-white">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h2 class="fw-bold text-dark mb-1">Government Schemes Repository</h2>
+                    <p class="text-muted mb-0">
+                        Explore {{ schemes|length }} verified central and state government schemes dynamically tracked by SmartGov AI.
+                    </p>
+                </div>
+                <div>
+                    <a href="{{ url_for('eligibility.eligibility') }}" class="btn btn-success fw-semibold px-4 py-2">
+                        <i class="bi bi-check2-circle me-1"></i> Check My Eligibility
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search & Filter Controls -->
+        <section class="scheme-search mb-4">
+            <div class="row g-2">
+                <div class="col-md-7">
+                    <div class="input-group shadow-sm">
+                        <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                        <input
+                            type="text"
+                            id="schemeSearchInput"
+                            class="form-control border-start-0 py-2"
+                            placeholder="Search schemes by name, category, or keyword..."
+                            onkeyup="filterSchemes()"
+                        >
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="d-flex gap-2">
+                        <select id="categoryFilter" class="form-select shadow-sm py-2" onchange="filterSchemes()">
+                            <option value="ALL">All Categories</option>
+                            <option value="Agriculture">Agriculture</option>
+                            <option value="Education">Education</option>
+                            <option value="Health & Wellness">Health & Wellness</option>
+                            <option value="Business & Entrepreneurship">Business & Entrepreneurship</option>
+                            <option value="Social Welfare">Social Welfare</option>
+                            <option value="Banking & Insurance">Banking & Insurance</option>
+                            <option value="Housing & Shelter">Housing & Shelter</option>
+                            <option value="Utility & Sanitation">Utility & Sanitation</option>
+                            <option value="Skills & Employment">Skills & Employment</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scheme Cards Grid -->
+        <section class="all-schemes row g-3" id="schemesGrid">
+            {% for scheme in schemes %}
+            <div class="col-md-6 col-lg-4 scheme-item" data-name="{{ scheme.scheme_name|lower }}" data-category="{{ scheme.category }}">
+                <div class="card h-100 border-0 shadow-sm p-3 bg-white d-flex flex-column justify-content-between">
+                    <div>
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="badge bg-light text-dark border small px-2 py-1">
+                                {{ scheme.category }}
+                            </span>
+                            <div>
+                                {% if scheme.rpa_status == 'SUCCESS' %}
+                                    <span class="badge bg-success small" title="Verified via Selenium RPA">
+                                        <i class="bi bi-patch-check-fill"></i> RPA Verified
+                                    </span>
+                                {% elif scheme.rpa_status in ['TIMEOUT', 'DNS_ERROR', 'UNAVAILABLE'] %}
+                                    <span class="badge bg-warning text-dark small" title="Government source currently unreachable">
+                                        <i class="bi bi-exclamation-triangle-fill"></i> Unreachable
+                                    </span>
+                                {% elif scheme.rpa_status == 'ALERT_ERROR' %}
+                                    <span class="badge bg-info text-dark small" title="Official notice active">
+                                        <i class="bi bi-bell-fill"></i> Notice
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-secondary small">
+                                        {{ scheme.rpa_status or 'Pending RPA' }}
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <h5 class="fw-bold text-dark mb-2" style="min-height: 48px;">
+                            {{ scheme.scheme_name }}
+                        </h5>
+
+                        <p class="text-muted small mb-3" style="min-height: 40px;">
+                            {{ (scheme.description or "Comprehensive welfare support for eligible citizens under government directives.")[:120] }}...
+                        </p>
+                    </div>
+
+                    <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+                        <small class="text-muted">
+                            <i class="bi bi-hash"></i> {{ scheme.scheme_id }}
+                        </small>
+                        <a href="{{ url_for('scheme.scheme_details', scheme_id=scheme.scheme_id) }}" class="btn btn-outline-primary btn-sm px-3">
+                            View Details <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+
+        <!-- No Results Fallback -->
+        <div id="noResultsMessage" class="text-center py-5 d-none bg-white rounded shadow-sm mt-3">
+            <i class="bi bi-search fs-1 text-muted d-block mb-2"></i>
+            <h5 class="fw-bold text-dark">No matching schemes found</h5>
+            <p class="text-muted mb-0">Try adjusting your search terms or filter category.</p>
+        </div>
+
+    </main>
+
+</div>
+
+<script>
+function filterSchemes() {
+    const searchVal = document.getElementById('schemeSearchInput').value.toLowerCase().trim();
+    const categoryVal = document.getElementById('categoryFilter').value;
+    const items = document.querySelectorAll('.scheme-item');
+    let visibleCount = 0;
+
+    items.forEach(item => {
+        const name = item.getAttribute('data-name');
+        const category = item.getAttribute('data-category');
+
+        const matchesSearch = !searchVal || name.includes(searchVal) || category.toLowerCase().includes(searchVal);
+        const matchesCategory = (categoryVal === 'ALL') || (category === categoryVal);
+
+        if (matchesSearch && matchesCategory) {
+            item.classList.remove('d-none');
+            visibleCount++;
+        } else {
+            item.classList.add('d-none');
+        }
+    });
+
+    const noResults = document.getElementById('noResultsMessage');
+    if (visibleCount === 0) {
+        noResults.classList.remove('d-none');
+    } else {
+        noResults.classList.add('d-none');
+    }
+}
+</script>
+
+{% endblock %}

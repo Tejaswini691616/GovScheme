@@ -1,0 +1,43 @@
+.navbar{
+
+    padding:18px 0;
+
+    transition:var(--transition);
+
+}
+
+.brand-text{
+
+    color:var(--primary-color);
+
+    font-size:1.45rem;
+
+    font-weight:700;
+
+}
+
+.nav-link{
+
+    margin-left:18px;
+
+    color:var(--text-primary)!important;
+
+    font-weight:500;
+
+    transition:var(--transition);
+
+}
+
+.nav-link:hover{
+
+    color:var(--secondary-color)!important;
+
+}
+
+.navbar .btn{
+
+    border-radius:50px;
+
+    padding:10px 24px;
+
+}

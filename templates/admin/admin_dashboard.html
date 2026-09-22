@@ -1,0 +1,41 @@
+<!-- PATH: GovScheme/templates/admin/admin_dashboard.html -->
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Admin Control Center | SmartGov AI{% endblock %}
+{% block content %}
+<div class="container-fluid py-4"><div class="d-flex justify-content-between align-items-center mb-4"><div><div class="small text-success fw-semibold">ADMIN CONTROL CENTER</div><h2>SmartGov AI Operations</h2><p class="text-muted mb-0">Scheme verification, citizen support, RPA and AI analytics.</p></div><form method="post" action="{{ url_for('admin.run_scheme_check') }}"><button class="btn btn-success"><i class="bi bi-arrow-repeat"></i> Run Scheme Update Check Now</button></form></div>
+<div class="d-flex flex-wrap gap-2 mb-3">
+<a class="btn btn-sm btn-outline-dark" href="{{ url_for('admin.users_admin') }}">Users</a>
+<a class="btn btn-sm btn-outline-dark" href="{{ url_for('admin.schemes_admin') }}">Schemes</a>
+<a class="btn btn-sm btn-outline-dark" href="{{ url_for('admin.analytics_admin') }}">Analytics</a>
+<a class="btn btn-sm btn-outline-dark" href="{{ url_for('admin.rpa_admin') }}">RPA Monitor</a>
+<a class="btn btn-sm btn-outline-dark" href="{{ url_for('admin.logs_admin') }}">Audit Logs</a>
+</div>
+<div class="row g-3 mb-4">{% for key,label in [('total_citizens','Citizens'),('total_schemes','Schemes'),('verified_schemes','Verified Sources'),('candidate_schemes','Pending Review'),('new_schemes','New Updates'),('updated_schemes','Changed Schemes'),('total_applications','Applications'),('open_complaints','Open Complaints'),('rpa_jobs','RPA Jobs'),('chat_sessions','Chat Sessions')] %}<div class="col-6 col-md-3 col-xl-2"><div class="card border-0 shadow-sm p-3 h-100"><small class="text-muted">{{ label }}</small><div class="fs-3 fw-bold">{{ stats[key] }}</div></div></div>{% endfor %}</div>
+<div class="row g-4"><div class="col-lg-7"><div class="card border-0 shadow-sm p-4 h-100"><div class="d-flex justify-content-between"><h5>Scheme Change Radar</h5><span class="badge bg-warning text-dark">{{ discovery_source }}</span></div><p class="small text-muted">Auto-check interval: {{ check_interval_hours }}h. New/updated candidates remain reviewable before trusted publication.</p>{% for u in recent_updates[:12] %}<div class="border-bottom py-2"><div class="d-flex justify-content-between"><strong>{{ u.scheme_id }}</strong><span class="badge {{ 'bg-success' if u.change_type=='NEW' else 'bg-warning text-dark' if u.change_type=='UPDATED' else 'bg-secondary' }}">{{ u.change_type }}</span></div><div class="small text-muted">{{ u.checked_at }} · {{ u.source }}</div><div class="small">{{ u.new_value or '' }}</div></div>{% else %}<div class="alert alert-light">No scheme changes recorded.</div>{% endfor %}</div></div><div class="col-lg-5"><div class="card border-0 shadow-sm p-4 h-100"><h5>Feedback Analytics</h5><div class="fs-1 fw-bold">{{ feedback_summary.average_rating or '—' }}<small class="fs-6"> / 5</small></div><p class="text-muted">{{ feedback_summary.total_feedback }} total feedback entries</p>{% for star in [5,4,3,2,1] %}<div class="d-flex align-items-center gap-2 mb-1"><span>{{ star }}★</span><div class="progress flex-grow-1"><div class="progress-bar" style="width:{{ (feedback_summary.star_counts[star] / feedback_summary.total_feedback * 100) if feedback_summary.total_feedback else 0 }}%"></div></div><span class="small">{{ feedback_summary.star_counts[star] }}</span></div>{% endfor %}<a class="btn btn-outline-success mt-3" href="{{ url_for('feedback.feedback_form') }}">Open feedback flow</a></div></div></div>
+<div class="card border-0 shadow-sm p-4 mt-4"><div class="d-flex justify-content-between"><h5>Complaints & Customer Care</h5><span class="badge bg-danger">{{ stats.open_complaints }} open</span></div>{% for c in complaints[:10] %}<div class="border-bottom py-3"><div class="d-flex justify-content-between"><strong>{{ c.complaint_number }}</strong><span>{{ c.status }}</span></div><div>{{ c.subject }}</div><div class="small text-muted">{{ c.user_name }} · {{ c.category }} · {{ c.priority }}</div><form method="post" action="{{ url_for('admin.respond_complaint', complaint_id=c.complaint_id) }}" class="mt-2 row g-2"><div class="col-md-8"><input class="form-control form-control-sm" name="message" placeholder="Admin response"></div><div class="col-md-2"><select class="form-select form-select-sm" name="status">{% for st in complaint_statuses %}<option>{{ st }}</option>{% endfor %}</select></div><div class="col-md-2"><button class="btn btn-sm btn-success w-100">Reply</button></div></form></div>{% else %}<div class="alert alert-light">No complaints.</div>{% endfor %}</div>
+
+<div class="card border-0 shadow-sm p-4 mt-4">
+  <h5>Scheme Discovery Settings</h5>
+  <p class="small text-muted">Choose the source used by the 24-hour checker. Official discoveries remain pending review until an administrator verifies them.</p>
+  <form method="post" action="{{ url_for('admin.update_discovery_settings') }}" class="row g-3 align-items-end">
+    <div class="col-md-6">
+      <label class="form-label" for="discovery_source">Discovery source</label>
+      <select id="discovery_source" name="discovery_source" class="form-select">
+        <option value="none" {{ 'selected' if discovery_source == 'none' }}>Disabled</option>
+        <option value="india_gov" {{ 'selected' if discovery_source == 'india_gov' }}>Official India.gov.in catalogue</option>
+        <option value="official_api" {{ 'selected' if discovery_source == 'official_api' }}>Configured official .gov.in/.nic.in JSON feed</option>
+        <option value="mock_demo" {{ 'selected' if discovery_source == 'mock_demo' }}>Demo sample feed</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label" for="check_interval_hours">Check interval</label>
+      <select id="check_interval_hours" name="check_interval_hours" class="form-select">
+        {% for h in [2,3,6,12,24] %}<option value="{{ h }}" {{ 'selected' if check_interval_hours == h }}>{{ h }} hours</option>{% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3"><button class="btn btn-success w-100" type="submit">Save Settings</button></div>
+  </form>
+</div>
+<div class="card border-0 shadow-sm p-4 mt-4"><h5>Recent Feedback</h5>{% for f in recent_feedback %}<div class="border-bottom py-2"><strong>{{ '★' * f.rating }}</strong> {{ f.comment or 'No comment' }} <span class="small text-muted">— {{ f.full_name or 'Citizen' }}, {{ f.created_at }}</span></div>{% else %}<div class="text-muted">No feedback yet.</div>{% endfor %}</div>
+<div class="alert alert-secondary small mt-4">Admin actions are protected server-side. Never treat prototype eligibility, demo RPA references or unverified scraped content as official government decisions.</div></div>
+{% endblock %}

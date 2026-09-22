@@ -1,0 +1,51 @@
+{
+  "name": "YojanaBharath.SchemeApplication",
+  "description": "Automates the repetitive steps of submitting a government scheme application: open portal, fill known citizen/scheme fields, upload permitted documents, submit where allowed, and read back the application reference number.",
+  "main": "Main.xaml",
+  "dependencies": {
+    "UiPath.System.Activities": "[23.10.3]",
+    "UiPath.UIAutomation.Activities": "[23.10.5]",
+    "UiPath.Excel.Activities": "[2.19.3]"
+  },
+  "webApplication": {},
+  "schemaVersion": "4.0",
+  "studioVersion": "23.10.3.0",
+  "projectId": "b6c8a9f0-0000-4b1e-9c1a-smartgovai0001",
+  "libraryOptions": {
+    "includeOriginalXaml": false,
+    "privateWorkflows": []
+  },
+  "designOptions": {
+    "projectProfile": "Developer",
+    "outputType": "Process",
+    "fileInfoCollection": [
+      { "FilePath": "Main.xaml", "IsMainWorkflowFile": true }
+    ]
+  },
+  "projectVersion": "1.0.0",
+  "runtimeOptions": {
+    "requiresUserInteraction": true,
+    "isAttended": false,
+    "autoDispose": false,
+    "netFrameworkVersion": "Windows"
+  },
+  "entryPoints": [
+    {
+      "filePath": "Main.xaml",
+      "uniqueId": "a1111111-1111-1111-1111-111111111111",
+      "input": [
+        { "name": "in_ApplicationId", "type": "System.Int32", "required": true },
+        { "name": "in_CitizenFullName", "type": "System.String", "required": true },
+        { "name": "in_CitizenAnnualIncome", "type": "System.Int32", "required": false },
+        { "name": "in_SchemeId", "type": "System.String", "required": true },
+        { "name": "in_SchemeName", "type": "System.String", "required": true },
+        { "name": "in_PortalUrl", "type": "System.String", "required": true }
+      ],
+      "output": [
+        { "name": "out_Status", "type": "System.String" },
+        { "name": "out_ApplicationNumber", "type": "System.String" },
+        { "name": "out_Remarks", "type": "System.String" }
+      ]
+    }
+  ]
+}

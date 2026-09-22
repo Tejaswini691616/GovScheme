@@ -1,0 +1,30 @@
+<!-- PATH: GovScheme/templates/admin/manage_schemes.html -->
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Scheme Verification | SmartGov AI{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+  <h3>Scheme Verification</h3>
+  <div class="table-responsive mt-3"><table class="table align-middle">
+    <thead><tr><th>Scheme</th><th>Source / Department</th><th>Status</th><th>Last checked</th><th>Action</th></tr></thead>
+    <tbody>
+    {% for s in schemes %}
+      <tr>
+        <td><strong>{{ s.scheme_name }}</strong><div class="small text-muted">{{ s.scheme_id }}</div></td>
+        <td>{{ s.source_name or s.source_url or 'Source verification is currently unavailable.' }}<div class="small text-muted">{{ s.government_department or 'Department not specified' }}</div></td>
+        <td>{{ s.verification_status }}</td>
+        <td>{{ s.last_checked or '—' }}</td>
+        <td>
+          <div class="d-flex gap-2 flex-wrap">
+            {% if s.verification_status == 'PENDING_REVIEW' %}
+              <form method="post" action="{{ url_for('admin.verify_scheme',scheme_id=s.scheme_id) }}"><button class="btn btn-sm btn-success">Approve</button></form>
+              <form method="post" action="{{ url_for('admin.reject_scheme',scheme_id=s.scheme_id) }}"><button class="btn btn-sm btn-outline-danger">Reject</button></form>
+            {% endif %}
+            {% if s.source_url %}<a class="btn btn-sm btn-outline-secondary" target="_blank" rel="noopener" href="{{ s.source_url }}">Review Source</a>{% endif %}
+          </div>
+        </td>
+      </tr>
+    {% else %}<tr><td colspan="5" class="text-center text-muted">No schemes available for review.</td></tr>{% endfor %}
+    </tbody>
+  </table></div>
+</div>
+{% endblock %}

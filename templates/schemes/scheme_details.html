@@ -1,0 +1,100 @@
+{# PATH: GovScheme/templates/schemes/scheme_details.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}{{ scheme.scheme_name }} - Yojana Bharath{% endblock %}
+{% block content %}
+
+<a href="{{ url_for('scheme.schemes_list') }}" class="text-muted-sg small text-decoration-none"><i class="bi bi-arrow-left"></i> Back to Schemes</a>
+
+<div class="card border-0 shadow-sm mt-3 p-4" style="border-radius: var(--sg-radius);">
+  <div class="d-flex justify-content-between align-items-start flex-wrap gap-3">
+    <div class="d-flex align-items-center gap-3">
+      <img class="sg-scheme-logo" style="width:64px;height:64px;" src="{{ url_for('static', filename='images/schemes/' ~ scheme.scheme_id ~ '.png') }}"
+           onerror="this.src='{{ url_for('static', filename='images/schemes/default.png') }}'" alt="">
+      <div>
+        <h3 class="mb-1">{{ scheme.scheme_name }}</h3>
+        <span class="text-muted-sg">{{ scheme.category }}</span>
+        {% if scheme.official_link %}<span class="badge bg-success-subtle text-success ms-2"><i class="bi bi-patch-check-fill"></i> Official link verified</span>{% endif %}
+      </div>
+    </div>
+    <form method="post" action="{{ url_for('scheme.unsave_scheme' if is_saved else 'scheme.save_scheme', scheme_id=scheme.scheme_id) }}">
+      <button class="heart-btn {{ 'active' if is_saved }}" style="font-size:1.6rem;" type="submit" aria-label="Save scheme">
+        <i class="bi {{ 'bi-heart-fill' if is_saved else 'bi-heart' }}"></i>
+      </button>
+    </form>
+  </div>
+
+  <span class="badge {{ 'badge-eligible' if result.is_eligible else 'badge-ineligible' }} mt-3" style="width:fit-content;">
+    {{ 'Potentially Eligible' if result.is_eligible else 'Not Eligible' }}
+  </span>
+
+  <h6 class="mt-4">Why You Are {{ 'Potentially Eligible' if result.is_eligible else 'Not Currently Eligible' }}</h6>
+  <pre class="small" style="white-space: pre-wrap; font-family: inherit;">{{ result.explanation_text() }}</pre>
+
+  <div class="card border-0 bg-light mt-4 p-3">
+    <h6 class="mb-3">Official Source Verification</h6>
+    <div class="row g-3 small">
+      <div class="col-md-4"><strong>Official Source</strong><br>{{ scheme.source_name or 'Source verification is currently unavailable.' }}</div>
+      <div class="col-md-4"><strong>Government Department</strong><br>{{ scheme.government_department or 'Not specified by source.' }}</div>
+      <div class="col-md-4"><strong>Verification Status</strong><br>{{ scheme.verification_status or 'PENDING_REVIEW' }}</div>
+      <div class="col-md-4"><strong>Last Checked</strong><br>{{ scheme.last_checked or 'Not checked' }}</div>
+      <div class="col-md-4"><strong>Last Verified</strong><br>{{ scheme.last_verified or 'Not verified' }}</div>
+      <div class="col-md-4"><strong>Source</strong><br>{% if scheme.source_url %}<a href="{{ scheme.source_url }}" target="_blank" rel="noopener">View Official Source</a>{% else %}Source verification is currently unavailable.{% endif %}</div>
+    </div>
+  </div>
+
+  <h6 class="mt-3">Description</h6>
+  <p>{{ scheme.description or 'Not specified in source.' }}</p>
+
+  <h6 class="mt-3">Configured Eligibility Criteria</h6>
+  <p>{{ scheme.eligibility or 'Not specified in dataset.' }}</p>
+
+  <div class="card border-0 bg-light mt-4 p-3">
+    <div class="d-flex justify-content-between align-items-center gap-3 flex-wrap">
+      <div>
+        <h6 class="mb-1"><i class="bi bi-file-earmark-check me-1"></i> Document Readiness</h6>
+        {% if readiness.percentage is not none %}
+          <div class="small text-muted">{{ readiness.percentage }}% based on verified scheme requirements and authorized document metadata.</div>
+        {% else %}
+          <div class="small text-muted">Readiness is unavailable until this scheme's document requirements are verified from an official source.</div>
+        {% endif %}
+      </div>
+      <a class="btn btn-outline-success btn-sm" href="{{ url_for('documents.document_readiness', scheme_id=scheme.scheme_id) }}">View Required Documents</a>
+    </div>
+  </div>
+
+  <h6 class="mt-4">Application Process</h6>
+  <div class="small text-muted border rounded p-3">{{ scheme.application_process or 'Application process is not specified in the verified scheme data. Use the official source before applying.' }}</div>
+
+  <h6 class="mt-4 mb-3">Apply</h6>
+  <div class="sg-apply-panel">
+    <div class="sg-apply-option demo">
+      <span class="tag">Demo</span>
+      <h6>Quick Demo Application</h6>
+      <p class="small text-muted-sg mb-3">Simulates the repetitive application steps inside Yojana Bharath (RPA demo). Generates a reference number prefixed <code>DEMO-</code>. Not a real government submission.</p>
+      <form method="post" action="{{ url_for('application.apply_now', scheme_id=scheme.scheme_id) }}">
+        <button type="submit" class="btn btn-sg-accent w-100" {{ 'disabled' if not result.is_eligible }}>
+          <i class="bi bi-lightning-charge"></i> Try Demo Application
+        </button>
+      </form>
+      {% if not result.is_eligible %}
+        <div class="small text-muted-sg mt-2">Disabled — you don't currently meet the configured prototype criteria for this scheme.</div>
+      {% endif %}
+    </div>
+    <div class="sg-apply-option official">
+      <span class="tag">Official</span>
+      <h6>Apply on Official Government Website</h6>
+      <p class="small text-muted-sg mb-3">Goes to the real government portal for this scheme, where your actual application is submitted and verified.</p>
+      {% if scheme.official_link %}
+        <a href="{{ scheme.official_link }}" target="_blank" rel="noopener" class="btn btn-sg-primary w-100">
+          <i class="bi bi-box-arrow-up-right"></i> Apply on {{ scheme.official_link.split('//')[1].split('/')[0] }}
+        </a>
+      {% else %}
+        <button class="btn btn-outline-secondary w-100" disabled>Official link not available in current dataset</button>
+        <div class="small text-muted-sg mt-2">This prototype scheme doesn't have a verified official government link — please search for the scheme name on india.gov.in or myscheme.gov.in.</div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="alert alert-warning mt-4 small mb-0">{{ disclaimer }}</div>
+</div>
+{% endblock %}

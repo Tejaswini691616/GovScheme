@@ -1,0 +1,166 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}Settings | SmartGov AI{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-layout">
+
+    {% include "includes/dashboard_sidebar.html" %}
+
+    <main class="dashboard-content">
+
+        <section class="settings-header">
+
+            <h2>Settings</h2>
+
+            <p>
+                Manage your account preferences and notification settings.
+            </p>
+
+        </section>
+
+        <section class="settings-card">
+
+            <div class="settings-section">
+
+                <div class="settings-title">
+
+                    <i class="bi bi-bell"></i>
+
+                    <div>
+                        <h4>Notifications</h4>
+                        <p>Choose how you want to receive updates.</p>
+                    </div>
+
+                </div>
+
+                <div class="setting-row">
+
+                    <div>
+                        <strong>Scheme Recommendations</strong>
+                        <span>Get notified when new schemes match your profile.</span>
+                    </div>
+
+                    <label class="switch">
+
+                        <input type="checkbox" checked>
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+                <div class="setting-row">
+
+                    <div>
+                        <strong>Application Updates</strong>
+                        <span>Receive updates about your applications.</span>
+                    </div>
+
+                    <label class="switch">
+
+                        <input type="checkbox" checked>
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+                <div class="setting-row">
+
+                    <div>
+                        <strong>New Scheme Alerts</strong>
+                        <span>Get notified when new government schemes are added.</span>
+                    </div>
+
+                    <label class="switch">
+
+                        <input type="checkbox" checked>
+
+                        <span class="slider"></span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-section">
+
+                <div class="settings-title">
+
+                    <i class="bi bi-shield-lock"></i>
+
+                    <div>
+                        <h4>Privacy & Security</h4>
+                        <p>Manage your account security.</p>
+                    </div>
+
+                </div>
+
+                <div class="setting-action">
+
+                    <div>
+
+                        <strong>Change Password</strong>
+
+                        <span>Update your account password.</span>
+
+                    </div>
+
+                    <button type="button">
+                        Change Password
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="settings-section">
+
+                <div class="settings-title">
+
+                    <i class="bi bi-translate"></i>
+
+                    <div>
+                        <h4>Language</h4>
+                        <p>Select your preferred language.</p>
+                    </div>
+
+                </div>
+
+                <select class="language-select">
+
+                    <option selected>English</option>
+                    <option>Hindi</option>
+                    <option>Kannada</option>
+
+                </select>
+
+            </div>
+
+
+            <div class="settings-footer">
+
+                <button class="save-settings">
+
+                    <i class="bi bi-check-lg"></i>
+
+                    Save Changes
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+<!-- PATH: GovScheme/templates/includes/dashboard_navbar.html -->
+<nav class="dashboard-navbar d-flex align-items-center justify-content-between px-3 px-lg-4">
+  <div class="dashboard-logo">
+    <a href="{{ url_for('dashboard.dashboard_home') }}" class="text-decoration-none d-flex align-items-center gap-2">
+      <img src="{{ url_for('static', filename='images/logos/logo.png') }}" alt="SmartGov AI" style="height:42px">
+      <div><h4 class="mb-0">SmartGov AI</h4><span>Your Guide to Government Schemes</span></div>
+    </a>
+  </div>
+  <div class="d-flex align-items-center gap-2">
+    <span class="sg-civic-pill d-none d-md-inline">{{ current_user.full_name if current_user else '' }}</span>
+    <select class="form-select form-select-sm sg-language-select" data-language-selector aria-label="Language">
+      {% for lang in supported_languages %}<option value="{{ lang }}" {{ 'selected' if lang == current_language }}>{{ lang }}</option>{% endfor %}
+    </select>
+    {% if current_user_is_admin %}<a class="btn btn-sm btn-outline-success" href="{{ url_for('admin.admin_home') }}">Admin</a>{% endif %}
+    <a class="btn btn-sm btn-outline-secondary" href="{{ url_for('auth.logout') }}" data-i18n="Logout" aria-label="Log out">Logout</a>
+  </div>
+</nav>

@@ -1,0 +1,72 @@
+{# PATH: GovScheme/templates/schemes/schemes.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Schemes - Yojana Bharath{% endblock %}
+{% block content %}
+
+<div class="sg-section-title"><span class="bar"></span><h4 class="mb-0">Government Schemes</h4></div>
+
+<form class="row g-2 mb-3" method="get">
+  <div class="col-md-5">
+    <div class="input-group">
+      <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+      <input type="text" name="q" value="{{ keyword }}" class="form-control" placeholder="Search by name, category or keyword...">
+    </div>
+  </div>
+  <div class="col-md-3">
+    <select name="category" class="form-select">
+      <option value="">All Categories</option>
+      {% for cat in categories %}
+        <option value="{{ cat.category }}" {{ 'selected' if cat.category == category }}>{{ cat.category }} ({{ cat.scheme_count }})</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="col-md-2 d-flex align-items-center">
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="showAllToggle" name="show_all" value="1" {{ 'checked' if show_all }} onchange="this.form.submit()">
+      <label class="form-check-label small" for="showAllToggle">Show all (incl. not eligible)</label>
+    </div>
+  </div>
+  <div class="col-md-2">
+    <button class="btn btn-sg-primary w-100" type="submit">Filter</button>
+  </div>
+</form>
+
+{% if not show_all %}
+<div class="alert alert-light border small mb-3">
+  <i class="bi bi-funnel"></i> Showing only schemes that match your profile ({{ schemes|length }} of {{ total_matching }} search results).
+  Toggle "Show all" above to see schemes you're not currently eligible for too.
+</div>
+{% endif %}
+
+<div class="row">
+{% for s in schemes %}
+  <div class="col-md-6">
+    <div class="sg-scheme-card">
+      <div class="scheme-row">
+        <div class="scheme-name">
+          <img class="sg-scheme-logo" src="{{ url_for('static', filename='images/schemes/' ~ s.scheme_id ~ '.png') }}"
+               onerror="this.src='{{ url_for('static', filename='images/schemes/default.png') }}'" alt="">
+          <a href="{{ url_for('scheme.scheme_details', scheme_id=s.scheme_id) }}" class="text-dark text-decoration-none">{{ s.scheme_name }}</a>
+        </div>
+        <form method="post" action="{{ url_for('scheme.save_scheme' if s.scheme_id not in saved_ids else 'scheme.unsave_scheme', scheme_id=s.scheme_id) }}">
+          <button class="heart-btn {{ 'active' if s.scheme_id in saved_ids }}" type="submit" aria-label="Save scheme">
+            <i class="bi {{ 'bi-heart-fill' if s.scheme_id in saved_ids else 'bi-heart' }}"></i>
+          </button>
+        </form>
+      </div>
+      <div class="small text-muted-sg mt-2">{{ s.category }}{% if s.official_link %} &middot; <i class="bi bi-patch-check-fill text-success"></i> Official link available{% endif %}</div>
+      <span class="badge {{ 'badge-eligible' if s.eligibility_badge == 'Potentially Eligible' else 'badge-ineligible' }} mt-2">{{ s.eligibility_badge }}</span>
+      <a href="{{ url_for('scheme.scheme_details', scheme_id=s.scheme_id) }}" class="btn btn-sm btn-sg-outline mt-3">View Details</a>
+    </div>
+  </div>
+{% else %}
+  <div class="alert alert-info">
+    {% if show_all %}
+      No schemes matched your search. Try a broader keyword, or clear the filters.
+    {% else %}
+      No schemes in your search currently match your profile. Try "Show all" above, or <a href="{{ url_for('profile.profile_edit') }}">update your profile</a>.
+    {% endif %}
+  </div>
+{% endfor %}
+</div>
+{% endblock %}

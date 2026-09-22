@@ -1,0 +1,82 @@
+{# PATH: GovScheme/templates/documents/readiness.html #}
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Document Readiness | SmartGov AI{% endblock %}
+{% block content %}
+<div class="container-fluid py-4">
+  <div class="card border-0 shadow-sm p-4">
+    <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+      <div>
+        <h4 class="mb-1">Document Readiness</h4>
+        {% if scheme %}
+          <p class="text-muted mb-0">{{ scheme.scheme_name }}</p>
+        {% else %}
+          <p class="text-muted mb-0">Choose a scheme to check its verified document requirements.</p>
+        {% endif %}
+      </div>
+      <span class="badge bg-secondary">Connection: {{ connection_status.replace('_', ' ')|title }}</span>
+    </div>
+
+    <div class="alert alert-info mt-4 mb-3">
+      <strong>Privacy:</strong> SmartGov AI does not ask for your DigiLocker password, PIN or OTP, does not scrape DigiLocker, and does not treat profile fields as proof that a document exists.
+    </div>
+
+    {% if integration.configured %}
+      <a class="btn btn-success mb-4" href="{{ url_for('documents.digilocker_connect') }}">
+        <i class="bi bi-shield-check me-1"></i> Access Documents via DigiLocker
+      </a>
+    {% else %}
+      <button class="btn btn-outline-secondary mb-2" type="button" disabled>
+        <i class="bi bi-shield-check me-1"></i> Access Documents via DigiLocker
+      </button>
+      <div class="alert alert-warning mb-4">
+        <strong>DigiLocker live integration: Unavailable.</strong><br>
+        The project has an official integration path, but authorized integration credentials/endpoints are not configured in this environment.
+        You can access your documents directly through the official DigiLocker portal.
+      </div>
+      <a class="btn btn-outline-success mb-4" target="_blank" rel="noopener" href="https://www.digilocker.gov.in/">
+        <i class="bi bi-box-arrow-up-right me-1"></i> Open Official DigiLocker
+      </a>
+    {% endif %}
+
+    {% if readiness.percentage is not none %}
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <strong>Readiness</strong><span class="badge bg-success">{{ readiness.percentage }}%</span>
+      </div>
+      <div class="progress mb-4" aria-label="Document readiness">
+        <div class="progress-bar" role="progressbar" style="width:{{ readiness.percentage }}%" aria-valuenow="{{ readiness.percentage }}" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+
+      {% for item in readiness.items %}
+      <div class="border-bottom py-3">
+        <div class="d-flex justify-content-between gap-3">
+          <div>
+            <strong>{{ item.document_type }}</strong>
+            {% if item.description %}<div class="small text-muted">{{ item.description }}</div>{% endif %}
+            <div class="small text-muted mt-1">Required by scheme: {{ item.required_by_scheme }}</div>
+          </div>
+          <span class="badge {% if item.status in ['READY','AVAILABLE','VERIFIED'] %}bg-success{% elif item.status == 'MISSING' %}bg-danger{% else %}bg-warning text-dark{% endif %}">
+            {% if item.status in ['READY','AVAILABLE','VERIFIED'] %}✓ Available{% elif item.status == 'MISSING' %}✗ Missing{% else %}⚠ Verification Required{% endif %}
+          </span>
+        </div>
+        <div class="small text-muted mt-1">Source: {{ item.source }} · Last checked: {{ item.last_checked or 'Not checked' }}</div>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="alert alert-warning">
+        <strong>Verification Required.</strong><br>
+        {{ readiness.message }}
+      </div>
+    {% endif %}
+
+    {% if scheme and scheme.official_link %}
+      <div class="mt-4 small text-muted">Scheme source: <a href="{{ scheme.official_link }}" target="_blank" rel="noopener">Official government source</a></div>
+    {% endif %}
+
+    {% if connection_status == 'CONNECTED' %}
+      <form method="post" action="{{ url_for('documents.digilocker_disconnect') }}" class="mt-3">
+        <button class="btn btn-outline-secondary btn-sm" type="submit">Disconnect local DigiLocker metadata</button>
+      </form>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

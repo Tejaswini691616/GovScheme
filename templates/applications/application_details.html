@@ -1,0 +1,13 @@
+<!-- PATH: GovScheme/templates/applications/application_details.html -->
+{% extends "layouts/dashboard_base.html" %}
+{% block title %}Application Details | SmartGov AI{% endblock %}
+{% block content %}<div class="container-fluid py-4"><a href="{{ url_for('application.applications_list') }}">← Back to Applications</a><div class="card border-0 shadow-sm p-4 mt-3"><div class="d-flex justify-content-between"><div><h4>{{ application.scheme_name }}</h4><span class="badge bg-secondary">{{ application.status }}</span></div><div class="text-end"><div class="small text-muted">Application ID</div><strong>{{ application.application_number or 'Pending reference' }}</strong></div></div><hr><div class="row g-3"><div class="col-md-4"><strong>Applied</strong><br>{{ application.application_date }}</div><div class="col-md-4"><strong>Last updated</strong><br>{{ application.updated_at }}</div><div class="col-md-4"><strong>Remarks</strong><br>{{ application.remarks or '—' }}</div></div>{% if application.application_number and application.application_number.startswith('DEMO-') %}<div class="alert alert-warning mt-4"><strong>DEMO RPA:</strong> This is a prototype application reference and is not a real government submission.</div>{% endif %}<div class="card bg-light border-0 p-3 mt-4">
+  <h6>Document Readiness</h6>
+  {% if readiness.percentage is not none %}
+    <p class="small mb-2">{{ readiness.percentage }}% based on verified scheme requirements and authorized document metadata.</p>
+  {% else %}
+    <p class="small text-muted mb-2">{{ readiness.message }}</p>
+  {% endif %}
+  <a class="btn btn-outline-success btn-sm" href="{{ url_for('documents.document_readiness', scheme_id=application.scheme_id) }}">View Required Documents</a>
+</div>
+<h5 class="mt-4">Application Timeline</h5>{% for e in events %}<div class="d-flex gap-3 py-2 border-bottom"><span class="text-success">●</span><div><strong>{{ e.status }}</strong><div class="small text-muted">{{ e.created_at }}{% if e.remarks %} — {{ e.remarks }}{% endif %}</div></div></div>{% endfor %}{% if application.application_link %}<a class="btn btn-outline-success mt-4" target="_blank" rel="noopener" href="{{ application.application_link }}">Open Official Government Portal</a>{% endif %}<div class="small text-muted mt-2">Source: {{ application.source_name or 'Not available' }} · Verified: {{ application.last_verified or 'Not available' }}</div></div></div>{% endblock %}

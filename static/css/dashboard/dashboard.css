@@ -1,0 +1,726 @@
+/* ===========================
+   Dashboard Navbar
+=========================== */
+
+.dashboard-navbar{
+    height:80px;
+    background:#fff;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 20px;
+    border-bottom:1px solid #ececec;
+}
+
+.dashboard-logo a{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+}
+
+.dashboard-logo img{
+    width:62px;
+    height:62px;
+}
+
+.dashboard-logo h4{
+    margin:0;
+    font-size:30px;
+    color:#2E7D32;
+    font-weight:700;
+}
+
+.dashboard-logo span{
+    font-size:13px;
+    color:#666;
+}
+
+.dashboard-menu{
+    display:flex;
+    list-style:none;
+    gap:50px;
+    margin:0;
+    margin-left:140px;   /* Move only the menu to the right */
+}
+
+.dashboard-menu a{
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+    padding:28px 0;
+    transition:.3s;
+}
+
+.dashboard-menu a:hover,
+.dashboard-menu a.active{
+    color:#2E7D32;
+    border-bottom:3px solid #2E7D32;
+}
+
+.dashboard-user{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+.notification-btn{
+    background:none;
+    border:none;
+    font-size:20px;
+}
+
+.user-info{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+}
+
+.user-info .bi-person-circle{
+    font-size:34px;
+}
+
+.user-info span{
+    font-weight:600;
+}
+/* ===========================
+        SIDEBAR
+=========================== */
+
+.dashboard-layout{
+
+    display:grid;
+
+    grid-template-columns:250px 1fr;
+
+    min-height:calc(100vh - 80px);
+}
+
+/* Sidebar */
+
+.dashboard-sidebar{
+
+    background:#fff;
+
+    border-right:1px solid #ECECEC;
+
+    padding:28px 16px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:space-between;
+}
+
+.sidebar-menu{
+
+    list-style:none;
+
+    margin:0;
+    padding:0;
+}
+
+.sidebar-menu li{
+
+    margin-bottom:12px;
+}
+
+.sidebar-menu a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding:14px 18px;
+
+    border-radius:12px;
+
+    text-decoration:none;
+
+    color:#333;
+
+    font-weight:500;
+
+    transition:.3s;
+}
+
+.sidebar-menu a:hover{
+
+    background:#F5FBF5;
+
+    color:#2E7D32;
+}
+
+.sidebar-menu .active a{
+
+    background:#EEF9F0;
+
+    color:#2E7D32;
+
+    font-weight:600;
+}
+
+.sidebar-menu i{
+
+    font-size:20px;
+}
+
+/* Mission Card */
+
+.mission-card{
+
+    background:#F3FBF4;
+
+    border-radius:18px;
+
+    padding:24px;
+
+    text-align:left;
+}
+
+.mission-card img{
+
+    width:90px;
+
+    margin-bottom:16px;
+}
+
+.mission-card h5{
+
+    color:#2E7D32;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+}
+
+.mission-card p{
+
+    font-size:14px;
+
+    color:#666;
+
+    margin:0;
+}
+/* ===================================
+        WELCOME BANNER
+=================================== */
+
+.dashboard-content{
+
+    padding:30px;
+    background:#F7FAF8;
+}
+
+.welcome-banner{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:linear-gradient(135deg,#F3FBF4,#F3FBF4);
+
+    border-radius:24px;
+
+    padding:40px 50px;
+
+    color:#fff;
+
+    overflow:hidden;
+}
+
+.welcome-left{
+
+    width:60%;
+}
+
+.welcome-left h2{
+
+    font-size:36px;
+
+    margin-bottom:15px;
+
+    color:black;
+}
+
+.welcome-left p{
+
+    color:black;
+
+    font-size:17px;
+
+    margin-bottom:30px;
+}
+
+.username{
+    color:#2E7D32;
+    font-weight:700;
+}
+
+.scheme-search{
+
+    display:flex;
+
+    gap:15px;
+}
+
+.scheme-search input{
+
+    flex:1;
+
+    padding:16px 20px;
+
+    border:none;
+
+    border-radius:14px;
+
+    font-size:16px;
+}
+
+.scheme-search button{
+
+    background:#2E7D32;
+
+    color:#fff;
+
+    padding:16px 28px;
+
+    border-radius:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.scheme-search button:hover{
+
+    background:#E8F5E9;
+}
+
+.welcome-right{
+
+    width:35%;
+
+    display:flex;
+
+    justify-content:center;
+}
+
+.welcome-right img{
+
+    width:300px;
+}
+
+/* ===========================
+      CATEGORY SECTION
+=========================== */
+
+.category-section{
+
+    margin-top:40px;
+}
+
+.category-section h3{
+
+    font-size:32px;
+    font-weight:700;
+    margin-bottom:25px;
+}
+
+.category-grid{
+
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:22px;
+}
+
+.category-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:28px 18px;
+
+    text-align:center;
+
+    box-shadow:0 2px 15px rgba(0,0,0,.06);
+
+    transition:.3s;
+
+    cursor:pointer;
+}
+
+.category-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 15px 30px rgba(0,0,0,.08);
+}
+
+.category-icon{
+
+    width:78px;
+    height:78px;
+
+    margin:auto auto 18px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+}
+
+.category-icon i{
+
+    font-size:38px;
+}
+
+/* Background Colors */
+
+.education{
+    background:#E8F0FF;
+    color:#2563EB;
+}
+
+.agriculture{
+    background:#EAF8EC;
+    color:#2E7D32;
+}
+
+.women{
+    background:#F6EAFE;
+    color:#7B3FE4;
+}
+
+.healthcare{
+    background:#FFECEF;
+    color:#D32F2F;
+}
+
+.employment{
+    background:#FFF6DD;
+    color:#A57C00;
+}
+
+.senior{
+    background:#F3ECFF;
+    color:#7E57C2;
+}
+
+.housing{
+    background:#FFF0E5;
+    color:#EF6C00;
+}
+
+.startup{
+    background:#E8FBF7;
+    color:#00897B;
+}
+
+.disability{
+    background:#E8F0FF;
+    color:#2962FF;
+}
+
+.child{
+    background:#FFEAF4;
+    color:#D81B60;
+}
+
+.category-card h5{
+
+    font-size:23px;
+
+    font-weight:600;
+
+    margin-bottom:8px;
+}
+
+.category-card p{
+
+    color:#2E7D32;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    margin:0;
+}
+
+/* Second Row (4 Cards) */
+
+.category-card:nth-child(n+7){
+
+    margin-top:5px;
+}
+
+/* ===========================
+   Recommended Schemes
+=========================== */
+
+.recommended-section{
+
+    margin-top:50px;
+}
+
+.section-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:22px;
+}
+
+.section-header h3{
+
+    font-size:30px;
+
+    font-weight:700;
+}
+
+.section-header a{
+
+    text-decoration:none;
+
+    color:#2E7D32;
+
+    font-weight:600;
+}
+
+.recommended-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:24px;
+}
+
+.scheme-card{
+
+    background:#fff;
+
+    border-radius:18px;
+
+    padding:22px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    box-shadow:0 3px 15px rgba(0,0,0,.06);
+
+    transition:.3s;
+}
+
+.scheme-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 12px 25px rgba(0,0,0,.08);
+}
+
+.scheme-card img{
+
+    width:72px;
+
+    height:72px;
+
+    border-radius:50%;
+
+    object-fit:contain;
+
+    border:2px solid #eee;
+}
+
+.scheme-info{
+
+    flex:1;
+}
+
+.scheme-info h5{
+
+    font-size:19px;
+
+    font-weight:600;
+
+    margin-bottom:8px;
+}
+
+.scheme-info p{
+
+    color:#666;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+}
+
+.eligible-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    background:#EAF8EC;
+
+    color:#2E7D32;
+
+    padding:6px 12px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+}
+
+.view-btn{
+
+    border:2px solid #2E7D32;
+
+    background:#fff;
+
+    color:#2E7D32;
+
+    padding:10px 18px;
+
+    border-radius:10px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.view-btn:hover{
+
+    background:#2E7D32;
+
+    color:#fff;
+}
+
+/* ===========================
+      Saved Schemes
+=========================== */
+
+.saved-schemes{
+    margin-top:40px;
+}
+
+.saved-heart{
+    color:#ef4444;
+    font-size:22px;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.saved-heart:hover{
+    transform:scale(1.15);
+}
+/* =========================================================
+   CHECK ELIGIBILITY ACTION
+========================================================= */
+
+.eligibility-action {
+    margin: 25px 0;
+}
+
+.eligibility-action-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 28px;
+    background: #E8F5E9;
+    border-radius: 16px;
+    border: 1px solid #d7ead9;
+}
+
+.eligibility-icon {
+    width: 58px;
+    height: 58px;
+    min-width: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #2E7D32;
+    color: white;
+    border-radius: 14px;
+    font-size: 26px;
+}
+
+.eligibility-text {
+    flex: 1;
+}
+
+.eligibility-text h3 {
+    margin: 0 0 6px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #1B5E20;
+}
+
+.eligibility-text p {
+    margin: 0;
+    color: #5f6f63;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.eligibility-button {
+    flex-shrink: 0;
+}
+
+.check-eligibility-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: #2E7D32;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.check-eligibility-btn:hover {
+    background: #1B5E20;
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    .eligibility-action-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .eligibility-button {
+        width: 100%;
+    }
+
+    .check-eligibility-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+}

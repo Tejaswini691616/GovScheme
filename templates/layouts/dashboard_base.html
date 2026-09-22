@@ -1,0 +1,35 @@
+<!-- PATH: GovScheme/templates/layouts/dashboard_base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Dashboard | SmartGov AI{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base/variables.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base/reset.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base/typography.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard/dashboard.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard/schemes.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard/applications.css') }}">
+  <style>
+    body.sg-theme-dark{background:#101827;color:#e8eef8} body.sg-theme-dark .card,body.sg-theme-dark .sg-scheme-card{background:#172235;color:#e8eef8}
+    body.sg-theme-high-contrast{background:#000;color:#fff} body.sg-theme-high-contrast a{color:#fff;text-decoration:underline}
+    body.sg-theme-indian-civic{background:linear-gradient(135deg,#fffdf7 0%,#f5fbf6 55%,#eef7ff 100%)} body.sg-theme-indian-civic .card,body.sg-theme-indian-civic .sg-scheme-card{border-top:3px solid #2e7d32!important}
+    @media (prefers-color-scheme:dark){body.sg-theme-system{background:#101827;color:#e8eef8} body.sg-theme-system .card,body.sg-theme-system .sg-scheme-card{background:#172235;color:#e8eef8}}
+    body.sg-theme-high-contrast input,body.sg-theme-high-contrast select,body.sg-theme-high-contrast textarea{background:#000;color:#fff;border:2px solid #fff}
+    body.sg-text-large{font-size:1.12rem} body.sg-reduced-motion *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+    .sg-language-select{min-width:120px}.sg-civic-pill{border-radius:999px;padding:.35rem .7rem;background:rgba(25,135,84,.1);font-size:.78rem}
+  </style>
+</head>
+<body data-language="{{ current_language or 'English' }}" data-theme="{{ theme_preference or 'system' }}" class="sg-theme-{{ theme_preference or 'system' }} {{ 'sg-text-large' if text_size == 'large' else '' }} {{ 'sg-reduced-motion' if reduced_motion else '' }}">
+  {% include 'includes/dashboard_navbar.html' %}
+  <main>{% block content %}{% endblock %}</main>
+  {% include 'includes/chatbot_widget.html' %}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/i18n.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/chatbot.js') }}"></script>
+</body>
+</html>

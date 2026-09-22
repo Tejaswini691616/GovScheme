@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}SmartGov AI{% endblock %}
+    </title>
+
+    <!-- Google Font -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <!-- Base CSS -->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base/variables.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/base/typography.css') }}">
+
+    <!-- Components -->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/navbar.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/footer.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/buttons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components/cards.css') }}">
+
+    <!-- Landing Page -->
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home/home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home/hero.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home/trust.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home/workflow.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home/categories.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home/features.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home/statistics.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home/testimonials.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home/faq.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/home/cta.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/chatbot.css') }}">
+
+
+</head>
+
+<body>
+
+    {% include 'includes/navbar.html' %}
+
+    <main>
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+    {% include 'includes/footer.html' %}
+
+    {% include 'includes/chatbot_widget.html' %}
+
+    <!-- Bootstrap -->
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Main JS -->
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+    <!-- Landing Page JS -->
+
+    <script src="{{ url_for('static', filename='js/home/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/home/hero.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/home/animations.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/home/counter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/home/faq.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pages/chatbot.js') }}"></script>
+    {% include "chatbot/chatbot.html" %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/register.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/login.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/forgot_password.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/otp_verification.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages/reset_password.css') }}">
+    
+</body>
+
+</html>

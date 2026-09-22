@@ -1,0 +1,60 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Admin Login | SmartGov AI{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm p-4 mt-4">
+                <div class="text-center mb-4">
+                    <div class="d-inline-flex align-items-center justify-content-center bg-dark text-white rounded-circle mb-3" style="width: 55px; height: 55px;">
+                        <i class="bi bi-shield-lock-fill fs-3"></i>
+                    </div>
+                    <h3 class="fw-bold">Admin Portal</h3>
+                    <p class="text-muted small">SmartGov AI Administrative Control & RPA Management</p>
+                </div>
+
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="{{ url_for('admin.admin_login') }}">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Admin Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                            <input type="email" name="email" class="form-control" placeholder="admin@smartgov.ai" required autofocus>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-key"></i></span>
+                            <input type="password" name="password" class="form-control" placeholder="Enter administrator password" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100 py-2 fw-semibold">
+                        <i class="bi bi-box-arrow-in-right me-2"></i> Access Admin Dashboard
+                    </button>
+                </form>
+
+                <div class="text-center mt-4 pt-3 border-top">
+                    <a href="{{ url_for('auth.login') }}" class="text-decoration-none small text-muted">
+                        <i class="bi bi-arrow-left me-1"></i> Return to Citizen Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

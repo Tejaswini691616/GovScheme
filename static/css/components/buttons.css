@@ -1,0 +1,57 @@
+.btn{
+
+    border-radius:50px;
+
+    padding:12px 28px;
+
+    transition:var(--transition);
+
+    font-weight:600;
+
+}
+
+.btn-success{
+
+    background:var(--secondary-color);
+
+    border:none;
+
+}
+
+.btn-success:hover{
+
+    background:#257249;
+
+    transform:translateY(-2px);
+
+}
+
+.btn-outline-primary{
+
+    border:2px solid var(--primary-color);
+
+    color:var(--primary-color);
+
+}
+
+.btn-outline-primary:hover{
+
+    background:var(--primary-color);
+
+    color:white;
+
+}
+
+.btn-primary{
+
+    background:var(--primary-color);
+
+    border:none;
+
+}
+
+.btn-primary:hover{
+
+    background:var(--primary-dark);
+
+}

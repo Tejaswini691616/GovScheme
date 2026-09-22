@@ -1,0 +1,99 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}My Applications | SmartGov AI{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-layout">
+
+    {% include "includes/dashboard_sidebar.html" %}
+
+    <main class="dashboard-content">
+
+        <section class="applications-header">
+
+            <h2>My Applications</h2>
+
+            <p>
+                Track the status of all your government scheme applications.
+            </p>
+
+        </section>
+
+        <!-- Statistics -->
+
+        <section class="application-stats">
+
+            <div class="stat-card">
+
+                <h3>8</h3>
+
+                <p>Total Applications</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <h3>3</h3>
+
+                <p>Approved</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <h3>4</h3>
+
+                <p>Pending</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <h3>1</h3>
+
+                <p>Rejected</p>
+
+            </div>
+
+        </section>
+
+        <!-- Applications List -->
+
+        <section class="application-list">
+
+            <!-- PM Kisan -->
+
+            <div class="application-card">
+
+                <img src="{{ url_for('static', filename='images/schemes/pm_kisan.png') }}">
+
+                <div class="application-info">
+
+                    <h4>PM Kisan Samman Nidhi</h4>
+
+                    <p>Applied on 15 July 2026</p>
+
+                </div>
+
+                <span class="status approved">
+
+                    Approved
+
+                </span>
+
+                <a href="#" class="view-btn">
+
+                    View Details
+
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+{% endblock %}
